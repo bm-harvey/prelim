@@ -117,12 +117,9 @@
 // Draw the FAUST detector array onto an *existing* canvas.
 // tracks: list of (track_theta, track_phi) or (track_theta, track_phi, color).
 //   track_theta = polar angle off z-axis; track_phi = azimuthal angle in x-y plane.
-//   Each track is drawn from the target to the first FAUST detector it hits,
-//   in list order, at the same draw depth as the beamline.
 #let draw_faust_on_canvas(scale: 0.34, mono: false, theta: 30deg, phi: 15deg, tracks: ()) = {
   let ring_colors = if mono {
     (luma(60%), luma(60%), luma(60%), luma(60%), luma(60%))
-    // (luma(20%), luma(20%), luma(20%), luma(20%), luma(20%))
   } else {
     (blue.darken(30%), teal.darken(10%), green.darken(30%), orange.darken(10%), red.darken(20%))
   }
@@ -140,56 +137,58 @@
     (xr * scale, ys * scale)
   }
 
-  // Camera-space depth of a point (larger = farther from camera)
-  let cam_depth(px, py, pz) = {
-    let zr = -px * calc.sin(theta) + pz * calc.cos(theta)
-    py * calc.sin(phi) + zr * calc.cos(phi)
-  }
-
-  // Relative depth of a centroid vs. the beamline (x=0, y=0) at the same z.
-  // cam_depth(cx,cy,cz) - cam_depth(0,0,cz) simplifies to:
-  //   cy*sin(phi) - cx*sin(theta)*cos(phi)
-  // Positive → centroid is farther from camera than beamline (draw behind axis).
-  // Negative → centroid is closer to camera than beamline (draw in front of axis).
-  let rel_depth(cx, cy, cz) = {
-    cy * calc.sin(phi) - cx * calc.sin(theta) * calc.cos(phi)
-  }
-
-  // Pre-compute (index, det, rel_depth) once
-  let tagged = range(_det_corners.len()).zip(_det_corners).map(pair => {
-    let det = pair.at(1)
-    let cx = det.map(c => c.at(0)).sum() / 4
-    let cy = det.map(c => c.at(1)).sum() / 4
-    let cz = det.map(c => c.at(2)).sum() / 4
-    (pair.at(0), det, rel_depth(cx, cy, cz))
-  })
-
-  // Back detectors: rel_depth >= 0, sorted farthest-first
-  let back  = tagged.filter(t => t.at(2) >= 0).sorted(key: t => -t.at(2))
-  // Front detectors: rel_depth < 0, sorted farthest-first (least negative last)
-  let front = tagged.filter(t => t.at(2) <  0).sorted(key: t => -t.at(2))
-
-  let draw_det(t) = {
-    let i   = t.at(0)
-    let det = t.at(1)
-    let clr = ring_colors.at(get_ring(i))
-    let pts = det.map(proj)
-    draw.line(..pts, close: true,
-      stroke: (paint: clr.darken(50%), thickness: 1pt),
-      fill: clr.transparentize(0%))
-  }
 
   let origin_2d  = proj((0, 0,  0))
   let pre_target = proj((0, 0, -5))
   let dump       = proj((0, 0, 50))
 
-  // Draw order: back detectors → beam axis + tracks → front detectors → target
-  for t in back { draw_det(t) }
+  // Camera-space depth: larger = farther from camera.
+  // Derived from the same rotation as proj(): depth = py*sin(phi) + zr*cos(phi)
+  // where zr = -px*sin(theta) + pz*cos(theta).
+  let depth(px, py, pz) = {
+    let zr = -px * calc.sin(theta) + pz * calc.cos(theta)
+    py * calc.sin(phi) + zr * calc.cos(phi)
+  }
 
-  draw.line(pre_target, dump, stroke: luma(0%) + 2pt)
+  // Sort detectors farthest-first (painter's algorithm) so closer ones are drawn last.
+  let sorted_dets = range(_det_corners.len()).zip(_det_corners).sorted(key: pair => {
+    let det = pair.at(1)
+    let cx = det.map(c => c.at(0)).sum() / 4
+    let cy = det.map(c => c.at(1)).sum() / 4
+    let cz = det.map(c => c.at(2)).sum() / 4
+    -depth(cx, cy, cz)  // negate → ascending sort puts farthest first
+  })
 
-  // Draw each track (origin → first FAUST hit) in list order
-  for track in tracks {
+  // Split at the beam axis: a detector is "behind" the axis when its centroid depth
+  // exceeds the beam axis depth at the same z.
+  //   depth(cx,cy,cz) - depth(0,0,cz) = cy*sin(phi) - cx*sin(theta)*cos(phi)
+  // Positive → farther than axis (draw before it); negative → closer (draw after).
+  let behind = sorted_dets.filter(pair => {
+    let det = pair.at(1)
+    let cx = det.map(c => c.at(0)).sum() / 4
+    let cy = det.map(c => c.at(1)).sum() / 4
+    cy * calc.sin(phi) - cx * calc.sin(theta) * calc.cos(phi) >= 0
+  })
+  let infrontof = sorted_dets.filter(pair => {
+    let det = pair.at(1)
+    let cx = det.map(c => c.at(0)).sum() / 4
+    let cy = det.map(c => c.at(1)).sum() / 4
+    cy * calc.sin(phi) - cx * calc.sin(theta) * calc.cos(phi) < 0
+  })
+
+  let draw_det(pair) = {
+
+    let i   = pair.at(0)
+    let det = pair.at(1)
+    let clr = ring_colors.at(get_ring(i))
+    draw.line(..det.map(proj), close: true,
+      stroke: (paint: clr.darken(50%), thickness: 1pt),
+      fill: clr.transparentize(0%))
+  }
+
+  // Pre-resolve all tracks: find hit detector, hit point, and whether the front
+  // face is hit (ray going against the quad normal → hit point is on visible face).
+  let resolved_tracks = tracks.map(track => {
     let track_theta = track.at(0)
     let track_phi   = track.at(1)
     let clr         = if track.len() > 2 { track.at(2) } else { red }
@@ -198,20 +197,73 @@
       calc.sin(track_theta) * calc.sin(track_phi),
       calc.cos(track_theta),
     )
-    let best_t = none
-    for det in _det_corners {
+    let best_t   = none
+    let best_idx = none
+    for (i, det) in range(_det_corners.len()).zip(_det_corners) {
       let t = _ray_quad((0.0, 0.0, 0.0), rd, det)
-      if t != none { if best_t == none or t < best_t { best_t = t } }
+      if t != none { if best_t == none or t < best_t { best_t = t; best_idx = i } }
     }
+    // front_face: ray hits the face whose normal opposes the ray direction
+    let front_face = if best_idx != none {
+      let det = _det_corners.at(best_idx)
+      let n = _cross3(_sub3(det.at(1), det.at(0)), _sub3(det.at(3), det.at(0)))
+      _dot3(rd, n) < 0
+    } else { false }
+    (rd, best_t, best_idx, clr, front_face)
+  })
+
+  // Build a lookup: det_idx → list of tracks that hit it on the front face
+  // (these tracks must be drawn just before their hit detector)
+  let front_face_hits = (:)
+  for r in resolved_tracks {
+    let best_idx  = r.at(2)
+    let front_face = r.at(4)
+    if best_idx != none and front_face {
+      let key = str(best_idx)
+      let existing = if key in front_face_hits { front_face_hits.at(key) } else { () }
+      front_face_hits.insert(key, existing + (r,))
+    }
+  }
+
+  let draw_track_line(r) = {
+    let rd     = r.at(0)
+    let best_t = r.at(1)
+    let clr    = r.at(3)
     if best_t != none {
       let hit = (rd.at(0) * best_t, rd.at(1) * best_t, rd.at(2) * best_t)
       draw.line(origin_2d, proj(hit), stroke: clr)
     }
   }
 
-  for t in front { draw_det(t) }
+  // Draw order:
+  //  1. behind-axis detectors (far→near)
+  //  2. beam axis
+  //  3. back-facing tracks (depth-treated like the axis, drawn after it)
+  //  4. infrontof detectors (far→near), each preceded by any front-face tracks targeting it
+  //  5. tracks with no hit
+  //  6. target marker
+  for pair in behind { draw_det(pair) }
+  draw.line(pre_target, dump, stroke: luma(0%) + 2pt)
 
-  // Target marker is closest to camera — draw it last (on top)
+  // Back-facing tracks: draw right after the beam axis
+  for r in resolved_tracks {
+    if not r.at(4) and r.at(2) != none { draw_track_line(r) }
+  }
+
+  // Infrontof detectors, with front-face tracks injected before their hit detector
+  for pair in infrontof {
+    let key = str(pair.at(0))
+    if key in front_face_hits {
+      for r in front_face_hits.at(key) { draw_track_line(r) }
+    }
+    draw_det(pair)
+  }
+
+  // Tracks that hit nothing
+  for r in resolved_tracks {
+    if r.at(2) == none { draw_track_line(r) }
+  }
+
   draw.circle(origin_2d, radius: 3pt, fill: luma(20%).transparentize(0%), stroke: black)
 }
 

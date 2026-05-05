@@ -330,7 +330,9 @@
     ]
   )
 
+
 ]
+
 
 
 #slide[
@@ -338,10 +340,17 @@
 
 
   #canvas({
-    draw_faust_on_canvas(scale: 0.24, theta: 47deg, phi: -24deg, mono:true,
-      tracks: ((-20deg, 3deg),(2deg, 3deg),))
+    draw_faust_on_canvas(scale: 0.24, theta: 37deg, phi: -33deg, mono:true, 
+      tracks: (
+      (-20deg, 3deg),
+      (3deg, -90deg),
+      (3deg, 90deg),
+    )
+  )
   })
   #canvas({
-    draw_faust_on_canvas(scale: 0.24, theta: 60deg, phi: -24deg, mono:false)
+    draw_faust_on_canvas(scale: 0.24, theta: 60deg, phi: -24deg, mono:false,
+      tracks: ((-20deg, 3deg),(2deg, 3deg),)
+    )
   })
 ]
