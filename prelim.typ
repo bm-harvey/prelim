@@ -1,6 +1,7 @@
 //#import "@preview/slydst:0.1.4": *
+#import "@preview/cetz:0.5.0": canvas, draw
 #import "@preview/grayness:0.6.0": *
-#import "@preview/cetz:0.5.0": canvas, draw, tree
+#import "faust.typ": *
 #import "@preview/polylux:0.4.0": *
 #set page(paper: "presentation-16-9")
 #let page-footer = align(center)[
@@ -331,8 +332,16 @@
 
 ]
 
+
 #slide[
   == First Experimental Evidence (2019)
-  
 
+
+  #canvas({
+    draw_faust_on_canvas(scale: 0.24, theta: 47deg, phi: -24deg, mono:true,
+      tracks: ((-20deg, 3deg),(2deg, 3deg),))
+  })
+  #canvas({
+    draw_faust_on_canvas(scale: 0.24, theta: 60deg, phi: -24deg, mono:false)
+  })
 ]
