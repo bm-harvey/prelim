@@ -137,6 +137,8 @@ def parse_args():
         help="Color hit detectors red (default: off)")
     parser.add_argument("--interactive", action="store_true", default=False,
         help="Open an interactive 3D window before saving outputs")
+    parser.add_argument("--hide-beam-downstream", action="store_true", default=False,
+        help="Hide the beam axis downstream of the target (z > 0) (default: off)")
     parser.add_argument("--track", nargs="+", action="append",
         metavar="ARG",
         help="Draw a track: THETA PHI [COLOR] [THICKNESS]. "
@@ -155,7 +157,8 @@ def parse_args():
         "transparent": False,
         "color":       False,
         "highlight_hits": False,
-        "interactive":    False,
+        "interactive":             False,
+        "hide_beam_downstream":    False,
         "track":       [],
     }
 
@@ -168,7 +171,8 @@ def parse_args():
         with open(config_path, "rb") as f:
             file_cfg = tomllib.load(f)
         for key in ("input", "theta", "phi", "roll", "size", "output",
-                    "transparent", "color", "highlight_hits", "interactive"):
+                    "transparent", "color", "highlight_hits", "interactive",
+                    "hide_beam_downstream"):
             if key in file_cfg:
                 cfg[key] = file_cfg[key]
         for t in file_cfg.get("track", []):
@@ -191,7 +195,8 @@ def parse_args():
     if cli.transparent:         cfg["transparent"] = True
     if cli.color:               cfg["color"]   = True
     if cli.highlight_hits:      cfg["highlight_hits"] = True
-    if cli.interactive:         cfg["interactive"]    = True
+    if cli.interactive:              cfg["interactive"]          = True
+    if cli.hide_beam_downstream:     cfg["hide_beam_downstream"] = True
     if cli.track:
         for args in cli.track:
             if len(args) < 2 or len(args) > 4:
@@ -361,7 +366,7 @@ def track_endpoint(track_theta_deg, track_phi_deg, quads):
         return origin + max_reach * direction, None
 
 
-def render(quads, det_r, theta, phi, roll, img_size, output_base, use_color, tracks, transparent, highlight_hits, interactive):
+def render(quads, det_r, theta, phi, roll, img_size, output_base, use_color, tracks, transparent, highlight_hits, interactive, hide_beam_downstream):
     colors = make_color_map(det_r, use_color)
 
     # Count how many tracks hit each detector so we can recolor them
@@ -395,7 +400,7 @@ def render(quads, det_r, theta, phi, roll, img_size, output_base, use_color, tra
 
     # --- Z-axis beam line (tube, same radius as beam arrow shaft) ---
     z_min_line = -6.0
-    z_max_line = all_pts[:, 2].max() + 3.0
+    z_max_line = 0.0 if hide_beam_downstream else all_pts[:, 2].max() + 3.0
     beam_arrow_shaft_r  = 0.15
     beam_arrow_tip_cm   = 1.2
     beam_arrow_tip_r    = 0.4
@@ -562,7 +567,8 @@ def main():
            img_size=img_size, output_base=cfg["output"],
            use_color=cfg["color"], tracks=cfg["track"],
            transparent=cfg["transparent"], highlight_hits=cfg["highlight_hits"],
-           interactive=cfg["interactive"])
+           interactive=cfg["interactive"],
+           hide_beam_downstream=cfg["hide_beam_downstream"])
 
 
 if __name__ == "__main__":

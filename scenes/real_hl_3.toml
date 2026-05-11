@@ -8,18 +8,19 @@ output      = "faust_renders/real_hl_3"
 color       = false
 transparent = false
 highlight_hits = true
+hide_beam_downstream = true
 thick_tracks = true
 
 [[track]]
 theta = 3.1
 phi   = 322.6
-color = "red"
+color = "grey"
 thickness = "thin"
 
 [[track]]
 theta = 34.7
 phi   = 45.9
-color = "red"
+color = "grey"
 thickness = "thin"
 
 [[track]]

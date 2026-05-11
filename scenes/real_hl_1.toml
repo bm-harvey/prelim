@@ -8,6 +8,7 @@
  color       = false
  transparent = false
  highlight_hits = true
+hide_beam_downstream = true
 thick_tracks = true
  
 [[track]]
@@ -19,11 +20,11 @@ thickness = "thick"
 [[track]]
 theta = 30.9
 phi   = 345.4
-color = "maroon"
+color = "grey"
 thickness = "thin"
 
 [[track]]
 theta = 34.3
 phi   = 66.4
-color = "maroon"
+color = "grey"
 thickness = "thin"

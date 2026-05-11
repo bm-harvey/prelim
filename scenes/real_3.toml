@@ -8,6 +8,7 @@ output      = "faust_renders/real_3"
 color       = false
 transparent = false
 highlight_hits = true
+hide_beam_downstream = true
 
 [[track]]
 theta = 3.1

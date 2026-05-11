@@ -1,5 +1,8 @@
 //#import "@preview/slydst:0.1.4": *
 #import "@preview/cetz:0.5.0": canvas, draw
+#import "@preview/cetz:0.5.0"
+#import "@preview/larrow:1.1.0": *
+#import "@preview/cetz-plot:0.1.2": plot
 #import "@preview/grayness:0.6.0": *
 #import "faust.typ": *
 #import "@preview/polylux:0.4.0": *
@@ -10,6 +13,7 @@
 
 #set page(footer: page-footer)
 
+#let lal = arrow-label.with(dx: 0mm, dy: 0mm)
 
 #import "@preview/physica:0.9.3": isotope
 #show math.equation: set text(font: "Fira Math")
@@ -383,47 +387,62 @@
   == Creating a Mixed Event
 
   #let box_radius = 10pt
-
+  #v(.5cm)
   #grid(
     columns: (1fr, 1fr, 1fr),
     gutter:0pt,
     align(center)[*Real Events*],
     align(center)[],
-    align(center)[*Mixed Events*],
+    align(center)[#only("3-")[*Mixed Events*]],
   )
   #grid(
     columns: (1fr, 1fr, 1fr),
-    rows: 2.4cm,
+    rows: 2.3cm,
 
     align(center)[
+      #only("1-")[
       #box(
         radius:box_radius,
         stroke:black,
         image("faust_renders/real_1.png", width:80%),
       )
+    ]
     ],
     align(center)[
+      #only("2-")[
       #box(stroke:black,
+        radius:box_radius,
         image("faust_renders/real_hl_1.png", width:80%)
       )
+    ]
     ],
     align(center)[
+      #only("3-")[
       #box(stroke:black,
+        radius:box_radius,
         image("faust_renders/mixed_1.png", width:80%)
       )
+    ]
     ],
 
     align(center)[
+      #only("1-")[
       #box(stroke:black,
+        radius:box_radius,
         image("faust_renders/real_2.png", width:80%)
       )
+      ]
     ],
     align(center)[
+      #only("2-")[
       #box(stroke:black,
+        radius:box_radius,
         image("faust_renders/real_hl_2.png", width:80%)
       )
+      ]
     ],
     align(center+horizon)[
+      #only("3-")[
       #box(
         text(size:34pt)[
         $
@@ -431,29 +450,38 @@
       $
     ]
     )
+    ]
     ],
-
-
     align(center)[
+      #only("1-")[
       #box(stroke:black,
+        radius:box_radius,
         image("faust_renders/real_4.png", width:80%)
       )
+      ]
     ],
     [],
     [],
 
     align(center)[
+      #only("1-")[
       #box(stroke:black,
+        radius:box_radius,
         image("faust_renders/real_3.png", width:80%)
       )
+      ]
     ],
     align(center)[
+      #only("2-")[
       #box(stroke:black,
+        radius:box_radius,
         image("faust_renders/real_hl_3.png", width:80%)
       )
+      ]
     ],
     [],
     align(center+horizon)[
+      #only("1-")[
       #box(
         text(size:34pt)[
         $
@@ -461,12 +489,74 @@
       $
     ]
     )
+    ]
     ],
     [],
     [],
 
-
   )
+  // #label-arrow(<hl1-end>, <mix-start>, 
+  //            bend: 0, 
+  //            tip: "stealth", 
+  //            from-tip: "o",
+  //            stroke: 1.5pt + red, 
+  //            from-offset: (0mm, 12.5mm),
+  //            to-offset: (-0mm, 12.5mm)
+  //          )
+  // #label-arrow(<hl2-end>, <mix-start>, 
+  //            bend: -15, 
+  //            tip: "stealth", 
+  //            from-tip: "o",
+  //            stroke: 1.5pt + red, 
+  //            from-offset: (0mm, 12.5mm),
+  //            to-offset: (-0mm, 11.5mm)
+  //          )
+  // #label-arrow(<hl3-end>, <mix-start>, 
+  //            bend: -25, 
+  //            tip: "stealth", 
+  //            from-tip: "o",
+  //            stroke: 1.5pt + red, 
+  //            from-offset: (-0mm, 12.5mm),
+  //            to-offset: (-0mm, 10mm)
+  //          )
+  //
+  // #label-arrow(<r1-end>, <hl1-start>, 
+  //            bend: 0, 
+  //            tip: "stealth", 
+  //            from-tip: "o",
+  //            stroke: 1.5pt + red, 
+  //            from-offset: (0mm, 12.5mm),
+  //            to-offset: (-0mm, 12.5mm)
+  //          )
+  // #label-arrow(<r2-end>, <hl2-start>, 
+  //            bend: 0, 
+  //            tip: "stealth", 
+  //            from-tip: "o",
+  //            stroke: 1.5pt + red, 
+  //            from-offset: (0mm, 12.5mm),
+  //            to-offset: (-0mm, 12.5mm)
+  //          )
+  // #label-arrow(<r3-end>, <hl3-start>, 
+  //            bend: 0, 
+  //            tip: "stealth", 
+  //            from-tip: "o",
+  //            stroke: 1.5pt + red, 
+  //            from-offset: (0mm, 12.5mm),
+  //            to-offset: (-0mm, 12.5mm)
+  //          )
+  //
 
+
+#place(dx:522pt, dy:-140pt)[#box(stroke:black+5pt, radius:20pt, width: 9.5cm, height:5.5cm, inset:15pt)[
+  #v(1fr)
+  #one-by-one()[
+    #text(size:20pt, weight:"bold")[$bold(dot)$]#h(.25cm) Start w/ events containing all particles][
+
+   #text(size:20pt, weight:"bold")[$bold(dot)$]#h(.25cm) Select particles from seperate events][
+
+   #text(size:20pt, weight:"bold")[$bold(dot)$]#h(.25cm) Construct new event
+  ]
+  #v(1fr)
+]]
 ]
 
