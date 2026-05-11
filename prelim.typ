@@ -95,6 +95,22 @@
   #today.display()
 ]
 
+// template
+#slide()[
+  == Title
+  #grid(
+    columns: (1fr, 1fr),
+    gutter: 8pt,
+    inset: 6pt,
+    stroke: none,
+    // 2012
+    align()[
+    ],
+    align()[
+    ],
+  )
+]
+
 #slide()[
   == Liquid Drop Model (1970s) - Original Theory
   #grid(
@@ -356,35 +372,101 @@
 #slide[
   == First Experimental Evidence (2019)
 
+
+]
+
+
+
+
+
+#slide[
+  == Creating a Mixed Event
+
+  #let box_radius = 10pt
+
   #grid(
-    columns: (auto, auto),
-
-    [
-      #canvas({
-        draw_faust_on_canvas(
-          scale: 0.24,
-          theta: 37deg,
-          phi: -33deg,
-          mono: true,
-        )
-      })
-    ],
-    [
-      #canvas({
-        draw_faust_on_canvas(scale: 0.24, theta: 60deg, phi: -24deg, mono: true)
-      })
-    ],
-
-    [
-      #canvas({
-        draw_faust_on_canvas(scale: 0.24, theta: 10deg, phi: -24deg, mono: true)
-      })
-    ],
-    [
-      #canvas({
-        draw_faust_on_canvas(scale: 0.24, theta: 80deg, phi: -24deg, mono: true)
-      })
-    ],
+    columns: (1fr, 1fr, 1fr),
+    gutter:0pt,
+    align(center)[*Real Events*],
+    align(center)[],
+    align(center)[*Mixed Events*],
   )
+  #grid(
+    columns: (1fr, 1fr, 1fr),
+    rows: 2.4cm,
+
+    align(center)[
+      #box(
+        radius:box_radius,
+        stroke:black,
+        image("faust_renders/real_1.png", width:80%),
+      )
+    ],
+    align(center)[
+      #box(stroke:black,
+        image("faust_renders/real_hl_1.png", width:80%)
+      )
+    ],
+    align(center)[
+      #box(stroke:black,
+        image("faust_renders/mixed_1.png", width:80%)
+      )
+    ],
+
+    align(center)[
+      #box(stroke:black,
+        image("faust_renders/real_2.png", width:80%)
+      )
+    ],
+    align(center)[
+      #box(stroke:black,
+        image("faust_renders/real_hl_2.png", width:80%)
+      )
+    ],
+    align(center+horizon)[
+      #box(
+        text(size:34pt)[
+        $
+      dots.v
+      $
+    ]
+    )
+    ],
+
+
+    align(center)[
+      #box(stroke:black,
+        image("faust_renders/real_4.png", width:80%)
+      )
+    ],
+    [],
+    [],
+
+    align(center)[
+      #box(stroke:black,
+        image("faust_renders/real_3.png", width:80%)
+      )
+    ],
+    align(center)[
+      #box(stroke:black,
+        image("faust_renders/real_hl_3.png", width:80%)
+      )
+    ],
+    [],
+    align(center+horizon)[
+      #box(
+        text(size:34pt)[
+        $
+      dots.v
+      $
+    ]
+    )
+    ],
+    [],
+    [],
+
+
+  )
+
 ]
 

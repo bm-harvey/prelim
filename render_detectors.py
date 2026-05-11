@@ -67,6 +67,14 @@ NAMED_COLORS = {
 }
 DEFAULT_TRACK_COLOR = "red"
 
+# Arrow dimensions (cm) keyed by thickness name.
+TRACK_THICKNESS = {
+    "thin":   dict(tip_len=0.7,  tip_rad=0.22, shaft_rad=0.08),
+    "normal": dict(tip_len=1.2,  tip_rad=0.40, shaft_rad=0.15),
+    "thick":  dict(tip_len=2.0,  tip_rad=0.70, shaft_rad=0.35),
+}
+DEFAULT_TRACK_THICKNESS = "normal"
+
 
 def resolve_track_color(track):
     """
@@ -93,6 +101,16 @@ def resolve_track_color(track):
     return NAMED_COLORS[name]
 
 
+def resolve_track_thickness(track):
+    """Return the arrow dimension dict for a track."""
+    name = track.get("thickness", DEFAULT_TRACK_THICKNESS).lower()
+    if name not in TRACK_THICKNESS:
+        print(f"ERROR: Unknown track thickness '{name}'. "
+              f"Valid options: {', '.join(TRACK_THICKNESS)}.")
+        sys.exit(1)
+    return TRACK_THICKNESS[name]
+
+
 def parse_args():
     parser = argparse.ArgumentParser(
         description="Render 3D detector geometry to PNG and SVG using PyVista.",
@@ -117,10 +135,13 @@ def parse_args():
         help="Color-code detectors by r-distance ring (default: grey)")
     parser.add_argument("--highlight-hits", action="store_true", default=False,
         help="Color hit detectors red (default: off)")
+    parser.add_argument("--interactive", action="store_true", default=False,
+        help="Open an interactive 3D window before saving outputs")
     parser.add_argument("--track", nargs="+", action="append",
         metavar="ARG",
-        help="Draw a track: THETA PHI [COLOR]. COLOR is a name "
-             "(red, blue, green, black, grey, maroon) or R,G,B. Repeatable.")
+        help="Draw a track: THETA PHI [COLOR] [THICKNESS]. "
+             "COLOR is a name (red, blue, green, black, grey, maroon) or R,G,B. "
+             "THICKNESS is thin, normal, or thick. Repeatable.")
     cli = parser.parse_args()
 
     # Built-in defaults
@@ -134,6 +155,7 @@ def parse_args():
         "transparent": False,
         "color":       False,
         "highlight_hits": False,
+        "interactive":    False,
         "track":       [],
     }
 
@@ -146,7 +168,7 @@ def parse_args():
         with open(config_path, "rb") as f:
             file_cfg = tomllib.load(f)
         for key in ("input", "theta", "phi", "roll", "size", "output",
-                    "transparent", "color", "highlight_hits"):
+                    "transparent", "color", "highlight_hits", "interactive"):
             if key in file_cfg:
                 cfg[key] = file_cfg[key]
         for t in file_cfg.get("track", []):
@@ -155,6 +177,8 @@ def parse_args():
                 track["rgb"] = t["rgb"]
             elif "color" in t:
                 track["color"] = t["color"]
+            if "thickness" in t:
+                track["thickness"] = t["thickness"]
             cfg["track"].append(track)
 
     # Layer in CLI overrides
@@ -167,13 +191,14 @@ def parse_args():
     if cli.transparent:         cfg["transparent"] = True
     if cli.color:               cfg["color"]   = True
     if cli.highlight_hits:      cfg["highlight_hits"] = True
+    if cli.interactive:         cfg["interactive"]    = True
     if cli.track:
         for args in cli.track:
-            if len(args) < 2 or len(args) > 3:
-                print("ERROR: --track requires THETA PHI [COLOR]")
+            if len(args) < 2 or len(args) > 4:
+                print("ERROR: --track requires THETA PHI [COLOR] [THICKNESS]")
                 sys.exit(1)
             track = {"theta": float(args[0]), "phi": float(args[1])}
-            if len(args) == 3:
+            if len(args) >= 3:
                 color_arg = args[2]
                 if "," in color_arg:
                     parts = color_arg.split(",")
@@ -183,6 +208,8 @@ def parse_args():
                     track["rgb"] = [float(p) for p in parts]
                 else:
                     track["color"] = color_arg
+            if len(args) == 4:
+                track["thickness"] = args[3]
             cfg["track"].append(track)
 
     return cfg
@@ -334,24 +361,24 @@ def track_endpoint(track_theta_deg, track_phi_deg, quads):
         return origin + max_reach * direction, None
 
 
-def render(quads, det_r, theta, phi, roll, img_size, output_base, use_color, tracks, transparent, highlight_hits):
+def render(quads, det_r, theta, phi, roll, img_size, output_base, use_color, tracks, transparent, highlight_hits, interactive):
     colors = make_color_map(det_r, use_color)
 
-    # Find all hit detector IDs up front so we can recolor them
-    hit_ids = set()
+    # Count how many tracks hit each detector so we can recolor them
+    hit_counts = defaultdict(int)
     if highlight_hits and tracks:
         for track in tracks:
             _, det_id = track_endpoint(track["theta"], track["phi"], quads)
             if det_id is not None:
-                hit_ids.add(det_id)
+                hit_counts[det_id] += 1
 
     all_pts = np.array([pt for corners in quads.values() for pt in corners])
     focal = all_pts.mean(axis=0)
     span = (all_pts.max(axis=0) - all_pts.min(axis=0)).max()
     distance = span * 2.2
 
-    pv.OFF_SCREEN = True
-    pl = pv.Plotter(off_screen=True, window_size=list(img_size))
+    pv.OFF_SCREEN = not interactive
+    pl = pv.Plotter(off_screen=not interactive, window_size=list(img_size))
     pl.set_background("white")
 
     # --- Detector quads ---
@@ -359,9 +386,11 @@ def render(quads, det_r, theta, phi, roll, img_size, output_base, use_color, tra
         pts = np.array(corners, dtype=float)
         faces = np.array([4, 0, 1, 2, 3])
         mesh = pv.PolyData(pts, faces)
-        c = (0.25, 0.35, 0.65) if det_id in hit_ids else colors[det_id]
+        c = colors[det_id]
+        if det_id in hit_counts:
+            c = (0.95, 0.55, 0.1) if hit_counts[det_id] > 1 else (0.25, 0.35, 0.65)
         pl.add_mesh(mesh, color=c, opacity=0.5 if transparent else 1.0,
-                    show_edges=True, edge_color="black", line_width=2.5,
+                    show_edges=True, edge_color="black", line_width=4.0,
                     lighting=False)
 
     # --- Z-axis beam line (tube, same radius as beam arrow shaft) ---
@@ -403,19 +432,22 @@ def render(quads, det_r, theta, phi, roll, img_size, output_base, use_color, tra
     pl.add_mesh(disc, color=(0.25, 0.25, 0.25), opacity=1.0, lighting=False)
 
     # --- Tracks ---
+    track_endpoints_list = []
     for track in (tracks or []):
         track_theta = track["theta"]
         track_phi   = track["phi"]
         endpoint, hit_id = track_endpoint(track_theta, track_phi, quads)
         color = resolve_track_color(track)
+        track_endpoints_list.append(endpoint)
 
         length = float(np.linalg.norm(endpoint))
         direction = endpoint / length
 
-        # Fixed absolute sizes in cm regardless of track length
-        tip_len_cm    = 1.2
-        tip_rad_cm    = 0.4
-        shaft_rad_cm  = 0.15
+        # Arrow dimensions from per-track thickness setting
+        dims = resolve_track_thickness(track)
+        tip_len_cm   = dims["tip_len"]
+        tip_rad_cm   = dims["tip_rad"]
+        shaft_rad_cm = dims["shaft_rad"]
 
         arrow = pv.Arrow(
             start=(0.0, 0.0, 0.0),
@@ -438,7 +470,55 @@ def render(quads, det_r, theta, phi, roll, img_size, output_base, use_color, tra
     pl.camera.position = cam_pos
     pl.camera.focal_point = focal
     pl.camera.up = cam_up
-    pl.camera.view_angle = 35.0
+
+    # Compute the view angle so all scene geometry fills the frame.
+    # Build camera axes from the actual position and up vector.
+    forward = np.array(focal, dtype=float) - np.array(cam_pos, dtype=float)
+    dist    = np.linalg.norm(forward)
+    forward /= dist
+    right = np.cross(forward, np.array(cam_up, dtype=float))
+    right /= np.linalg.norm(right)
+    up_cam = np.cross(right, forward)
+    up_cam /= np.linalg.norm(up_cam)
+
+    # Gather all scene points: detectors + beam line extents + track endpoints
+    extra = [[0.0, 0.0, z_min_line], [0.0, 0.0, z_max_line]]
+    if track_endpoints_list:
+        extra.extend(track_endpoints_list)
+    scene_pts = np.vstack([all_pts, extra])
+
+    # Project each point into camera tangent space (horiz, vert)
+    cam_pos_arr = np.array(cam_pos, dtype=float)
+    min_h = min_v =  np.inf
+    max_h = max_v = -np.inf
+    for pt in scene_pts:
+        v = pt - cam_pos_arr
+        depth = np.dot(v, forward)
+        if depth <= 0:
+            continue
+        h = np.dot(v, right)   / depth
+        v_ = np.dot(v, up_cam) / depth
+        min_h = min(min_h, h);  max_h = max(max_h, h)
+        min_v = min(min_v, v_); max_v = max(max_v, v_)
+
+    # Shift focal point to the visual centroid of the projected bounding box
+    center_h = (min_h + max_h) / 2
+    center_v = (min_v + max_v) / 2
+    new_focal = np.array(focal, dtype=float) + center_h * dist * right + center_v * dist * up_cam
+    pl.camera.focal_point = new_focal
+
+    # Symmetric half-extents relative to the new focal direction
+    half_h = (max_h - min_h) / 2
+    half_v = (max_v - min_v) / 2
+    w_px, h_px = img_size
+    aspect = w_px / h_px
+    half_fov_v = max(half_v, half_h / aspect) * 1.05
+    pl.camera.view_angle = np.degrees(np.arctan(half_fov_v)) * 2
+
+    # --- Interactive window (optional) ---
+    if interactive:
+        print("Opening interactive window — close it to save outputs.")
+        pl.show()
 
     # --- Save PNG ---
     png_path = f"{output_base}.png"
@@ -481,7 +561,8 @@ def main():
            theta=cfg["theta"], phi=cfg["phi"], roll=cfg["roll"],
            img_size=img_size, output_base=cfg["output"],
            use_color=cfg["color"], tracks=cfg["track"],
-           transparent=cfg["transparent"], highlight_hits=cfg["highlight_hits"])
+           transparent=cfg["transparent"], highlight_hits=cfg["highlight_hits"],
+           interactive=cfg["interactive"])
 
 
 if __name__ == "__main__":

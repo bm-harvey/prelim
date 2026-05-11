@@ -3,29 +3,26 @@
  theta       = -120.0
  phi         = -25.0
  roll        = 85.0
- size        = "3840x2160"
- output      = "faust_renders/example_scene"
+ size        = "3840x1600"
+ output      = "faust_renders/real_2"
  color       = false
  transparent = false
  highlight_hits = true
  
 [[track]]
-theta = 2.0
-phi   = -1.0
+theta = 4.3
+phi   = 141.5
 color = "red"
+thickness = "thick"
 
 [[track]]
-theta = 23.0
-phi   = 43.0
-rgb = [80, 0, 0]
+theta = 29.8
+phi   = -110.1
+color = "red"
+thickness = "thick"
 
 [[track]]
 theta = 12.0
-phi   = -180.0
-rgb = [80, 0, 0]
-
-[[track]]
-theta = 8.0
-phi   = -120.0
-rgb = [80, 0, 0]
-
+phi   = 219.0
+color = "red"
+thickness = "thick"

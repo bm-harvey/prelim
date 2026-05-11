@@ -4,7 +4,7 @@
  phi         = -25.0
  roll        = 85.0
  size        = "3840x2160"
- output      = "faust_renders/example_scene"
+ output      = "faust_renders/double_hit"
  color       = false
  transparent = false
  highlight_hits = true
@@ -17,15 +17,15 @@ color = "red"
 [[track]]
 theta = 23.0
 phi   = 43.0
-rgb = [80, 0, 0]
+rgb = [60, 0, 0]
 
 [[track]]
 theta = 12.0
 phi   = -180.0
-rgb = [80, 0, 0]
+rgb = [60, 0, 0]
 
 [[track]]
-theta = 8.0
-phi   = -120.0
-rgb = [80, 0, 0]
+theta = 14.0
+phi   = -180.0
+rgb = [60, 0, 0]
 

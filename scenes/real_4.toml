@@ -1,0 +1,28 @@
+# scene.toml
+input       = "detnum_corner_z_x_y_r.txt"
+theta       = -120.0
+phi         = -25.0
+roll        = 85.0
+size        = "3840x1800"
+output      = "faust_renders/real_4"
+color       = false
+transparent = false
+highlight_hits = true
+
+[[track]]
+theta = 13.8
+phi   = 324.6
+color = "red"
+thickness = "thick"
+
+[[track]]
+theta = 26.7
+phi   = 66.1
+color = "red"
+thickness = "thick"
+
+[[track]]
+theta = 31.2
+phi   = 339.8
+color = "red"
+thickness = "thick"
