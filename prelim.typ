@@ -402,7 +402,40 @@
       *Experimental Overview*
 
       $si28 +c12$ @ 35 MeV/u
-      
+
+      #v(0.4em)
+      #align()[
+        #box(stroke:black, inset:7pt,radius:18pt, [
+
+        #canvas(length: 1cm, {
+        import draw: *
+
+        // Radii scaled as r0 * A^(1/3), r0 = 0.35
+        let r-si = 1.06  // 0.35 * 28^(1/3)
+        let r-c  = 0.80  // 0.35 * 12^(1/3)
+        let x-si = -.2
+        let x-c  =  2.0
+        let offset = 1
+
+        // Beam arrow approaching Si-28
+        line((x-si, offset), (x-si + r-si + 1.15, offset),
+          mark: (end: ">", size: 0.3),
+          stroke: gray.darken(30%) + 1pt)
+
+        // Si-28 nucleus (projectile)
+        circle((x-si, offset), radius: r-si,
+          fill: blue.lighten(60%),
+          stroke: blue.darken(25%) + 1.5pt)
+        content((x-si, offset), si28)
+
+        // C-12 nucleus (target)
+        circle((x-c, 0), radius: r-c,
+          fill: gray.lighten(60%),
+          stroke: gray.darken(25%) + 1.5pt)
+        content((x-c, 0), c12)
+
+      })])]
+    
     ],
     align(center)[
       *Neutron Ion Multidetector For Reaction Oritented Dynamics\ (NIMROD)*
