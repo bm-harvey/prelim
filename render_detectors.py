@@ -23,9 +23,13 @@ Options:
     --output NAME       Output base name without extension (default: detectors)
     --transparent       Render detectors semi-transparent
     --color             Color-code detectors by ring instead of grey
-    --track THETA PHI [COLOR]  Draw a track (repeatable); COLOR is a name
+    --hide-detectors    Do not render the detector quads
+    --track THETA PHI [COLOR] [THICKNESS] [LENGTH]
+                               Draw a track (repeatable); COLOR is a name
                                (red, blue, green, black, grey, maroon) or
                                R,G,B (e.g. 255,128,0). Defaults to red.
+                               LENGTH (cm) fixes the arrow length regardless
+                               of detector hits; omit to stop at the hit detector.
 
 Example config file (scene.toml):
     input       = "detnum_corner_z_x_y_r.txt"
@@ -139,11 +143,15 @@ def parse_args():
         help="Open an interactive 3D window before saving outputs")
     parser.add_argument("--hide-beam-downstream", action="store_true", default=False,
         help="Hide the beam axis downstream of the target (z > 0) (default: off)")
+    parser.add_argument("--hide-detectors", action="store_true", default=False,
+        help="Do not render the detector quads (default: off)")
     parser.add_argument("--track", nargs="+", action="append",
         metavar="ARG",
-        help="Draw a track: THETA PHI [COLOR] [THICKNESS]. "
+        help="Draw a track: THETA PHI [COLOR] [THICKNESS] [LENGTH]. "
              "COLOR is a name (red, blue, green, black, grey, maroon) or R,G,B. "
-             "THICKNESS is thin, normal, or thick. Repeatable.")
+             "THICKNESS is thin, normal, or thick. "
+             "LENGTH (cm) fixes the arrow length; omit to stop at the hit detector. "
+             "Repeatable.")
     cli = parser.parse_args()
 
     # Built-in defaults
@@ -159,6 +167,7 @@ def parse_args():
         "highlight_hits": False,
         "interactive":             False,
         "hide_beam_downstream":    False,
+        "hide_detectors":          False,
         "track":       [],
     }
 
@@ -172,7 +181,7 @@ def parse_args():
             file_cfg = tomllib.load(f)
         for key in ("input", "theta", "phi", "roll", "size", "output",
                     "transparent", "color", "highlight_hits", "interactive",
-                    "hide_beam_downstream"):
+                    "hide_beam_downstream", "hide_detectors"):
             if key in file_cfg:
                 cfg[key] = file_cfg[key]
         for t in file_cfg.get("track", []):
@@ -183,6 +192,8 @@ def parse_args():
                 track["color"] = t["color"]
             if "thickness" in t:
                 track["thickness"] = t["thickness"]
+            if "length" in t:
+                track["length"] = float(t["length"])
             cfg["track"].append(track)
 
     # Layer in CLI overrides
@@ -197,10 +208,11 @@ def parse_args():
     if cli.highlight_hits:      cfg["highlight_hits"] = True
     if cli.interactive:              cfg["interactive"]          = True
     if cli.hide_beam_downstream:     cfg["hide_beam_downstream"] = True
+    if cli.hide_detectors:           cfg["hide_detectors"]       = True
     if cli.track:
         for args in cli.track:
-            if len(args) < 2 or len(args) > 4:
-                print("ERROR: --track requires THETA PHI [COLOR] [THICKNESS]")
+            if len(args) < 2 or len(args) > 5:
+                print("ERROR: --track requires THETA PHI [COLOR] [THICKNESS] [LENGTH]")
                 sys.exit(1)
             track = {"theta": float(args[0]), "phi": float(args[1])}
             if len(args) >= 3:
@@ -213,8 +225,10 @@ def parse_args():
                     track["rgb"] = [float(p) for p in parts]
                 else:
                     track["color"] = color_arg
-            if len(args) == 4:
+            if len(args) >= 4:
                 track["thickness"] = args[3]
+            if len(args) == 5:
+                track["length"] = float(args[4])
             cfg["track"].append(track)
 
     return cfg
@@ -366,7 +380,7 @@ def track_endpoint(track_theta_deg, track_phi_deg, quads):
         return origin + max_reach * direction, None
 
 
-def render(quads, det_r, theta, phi, roll, img_size, output_base, use_color, tracks, transparent, highlight_hits, interactive, hide_beam_downstream):
+def render(quads, det_r, theta, phi, roll, img_size, output_base, use_color, tracks, transparent, highlight_hits, interactive, hide_beam_downstream, hide_detectors=False):
     colors = make_color_map(det_r, use_color)
 
     # Count how many tracks hit each detector so we can recolor them
@@ -387,16 +401,17 @@ def render(quads, det_r, theta, phi, roll, img_size, output_base, use_color, tra
     pl.set_background("white")
 
     # --- Detector quads ---
-    for det_id, corners in quads.items():
-        pts = np.array(corners, dtype=float)
-        faces = np.array([4, 0, 1, 2, 3])
-        mesh = pv.PolyData(pts, faces)
-        c = colors[det_id]
-        if det_id in hit_counts:
-            c = (0.95, 0.55, 0.1) if hit_counts[det_id] > 1 else (0.25, 0.35, 0.65)
-        pl.add_mesh(mesh, color=c, opacity=0.5 if transparent else 1.0,
-                    show_edges=True, edge_color="black", line_width=4.0,
-                    lighting=False)
+    if not hide_detectors:
+        for det_id, corners in quads.items():
+            pts = np.array(corners, dtype=float)
+            faces = np.array([4, 0, 1, 2, 3])
+            mesh = pv.PolyData(pts, faces)
+            c = colors[det_id]
+            if det_id in hit_counts:
+                c = (0.95, 0.55, 0.1) if hit_counts[det_id] > 1 else (0.25, 0.35, 0.65)
+            pl.add_mesh(mesh, color=c, opacity=0.5 if transparent else 1.0,
+                        show_edges=True, edge_color="black", line_width=4.0,
+                        lighting=False)
 
     # --- Z-axis beam line (tube, same radius as beam arrow shaft) ---
     z_min_line = -6.0
@@ -405,8 +420,22 @@ def render(quads, det_r, theta, phi, roll, img_size, output_base, use_color, tra
     beam_arrow_tip_cm   = 1.2
     beam_arrow_tip_r    = 0.4
     beam_arrow_length   = 4.0
-    line = pv.Line((0, 0, z_min_line), (0, 0, z_max_line))
+
+    # Solid tube upstream of target (z < 0)
+    line = pv.Line((0, 0, z_min_line), (0, 0, 0.0))
     pl.add_mesh(line.tube(radius=beam_arrow_shaft_r), color="black", lighting=False)
+
+    # Dashed tube downstream of target (z > 0)
+    if not hide_beam_downstream:
+        dash_len = 1.5
+        gap_len  = 1.0
+        period   = dash_len + gap_len
+        z = 0.0
+        while z < z_max_line:
+            z_end = min(z + dash_len, z_max_line)
+            seg = pv.Line((0, 0, z), (0, 0, z_end))
+            pl.add_mesh(seg.tube(radius=beam_arrow_shaft_r), color="black", lighting=False)
+            z += period
     tip_z = z_min_line / 2          # halfway between z_min_line and 0
     beam_arrow_start_z  = tip_z - beam_arrow_length
     beam_arrow = pv.Arrow(
@@ -443,10 +472,23 @@ def render(quads, det_r, theta, phi, roll, img_size, output_base, use_color, tra
         track_phi   = track["phi"]
         endpoint, hit_id = track_endpoint(track_theta, track_phi, quads)
         color = resolve_track_color(track)
-        track_endpoints_list.append(endpoint)
 
-        length = float(np.linalg.norm(endpoint))
-        direction = endpoint / length
+        if "length" in track:
+            # Fixed length: recompute endpoint along the track direction
+            theta_r = np.radians(track_theta)
+            phi_r   = np.radians(track_phi)
+            direction = np.array([
+                np.sin(theta_r) * np.cos(phi_r),
+                np.sin(theta_r) * np.sin(phi_r),
+                np.cos(theta_r),
+            ])
+            length = float(track["length"])
+            endpoint = direction * length
+        else:
+            length = float(np.linalg.norm(endpoint))
+            direction = endpoint / length
+
+        track_endpoints_list.append(endpoint)
 
         # Arrow dimensions from per-track thickness setting
         dims = resolve_track_thickness(track)
@@ -568,7 +610,8 @@ def main():
            use_color=cfg["color"], tracks=cfg["track"],
            transparent=cfg["transparent"], highlight_hits=cfg["highlight_hits"],
            interactive=cfg["interactive"],
-           hide_beam_downstream=cfg["hide_beam_downstream"])
+           hide_beam_downstream=cfg["hide_beam_downstream"],
+           hide_detectors=cfg["hide_detectors"])
 
 
 if __name__ == "__main__":
