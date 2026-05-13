@@ -50,7 +50,7 @@
 
 #let quote(body) = {
   set text(gray.darken(60%))
-  [#emph(text(size: 14pt, body))]
+  ["#emph(text(size: 14pt, body))"]
 }
 
 #let bad(body) = {
@@ -327,15 +327,16 @@
         #reaction-cartoon()
       ]
       #align(center + horizon)[
+        // #line()
 
         #box(
           $
-            E^*_si28 = underbrace(sum_(i) T_(alpha_i), E_"rel") - underbrace(( m_si28 - 7m_alpha ), Q) quad #text(fill:luma(30%))[$"if" 7alpha "from" si28^*$]
+            E^*_si28 = underbrace(sum_(i) T_(alpha_i), E_"rel") - underbrace(( m_si28 - 7m_alpha ), Q) quad #text(fill: luma(30%))[$"if" 7alpha "from" si28^*$]
           $,
-          stroke: black,
-          inset: 2pt,
-          outset: 6pt,
-          radius: 5pt,
+          stroke: none,
+          // inset: 2pt,
+          // outset: 6pt,
+          // radius: 5pt,
         )
       ]
 
@@ -365,26 +366,51 @@
 
   #grid(
     ..grid_default,
-    columns: (1fr, 1fr, 1fr),
+    columns: (1.9fr, 2fr, 1.6fr),
+    align(left)[
+      #v(1fr)
+      - Reaction 
+        - $si28 + c12$ @ 35 MeV/u
+        - Part of 2009 experimental series
+      #v(1fr)
+      - Sample Size
+        - 6,467 Events w/ 7$alpha$
+      #v(1fr)
+      - Resolution for $E^*$ from $7alpha$
+        - $~9.4$ MeV (FWHM)
+        - Position insensitive detectors
+      #v(1fr)
+    ],
+    align(center)[
+      #image("figures/cao_2019/7alphaSpectrum.png", height: 92%)
+    ],
+    align(left)[
+      #v(1fr)
+      - Nonresonant Background
+        - Mixed Events
+        - #dim[Shifted AMD distribution]
+      #v(1fr)
+      - Extracted Peaks
+        - $E^* = bold(114), bold(126), bold(138)$ MeV 
+        - FWHM dominated by resolution
 
-    align(center)[
-      test1
-    ],
-    align(center)[
-      test2
-    ],
-    align(center)[
-      test3
+      #v(1fr)
+      #quote[Clearly an experiment with much better angular resolution, allowing better resolution for the excitation energy spectrum, will be very desirable.]
+
+      #v(1fr)
     ],
   )
-
-
 ]
 
 
 
 
 
+
+#slide[
+  == Followup Measurements
+
+]
 
 #slide[
   == Creating a Mixed Event
@@ -490,6 +516,7 @@
     #v(1fr)
   ]]
 ]
+
 
 
 #slide[

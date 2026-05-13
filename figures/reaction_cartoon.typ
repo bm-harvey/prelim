@@ -97,7 +97,7 @@
         let angle = 2 * calc.pi * i / 7
         let ax = cx + r-dist * calc.cos(angle)
         let ay = cy + r-dist * calc.sin(angle)
-        circle((ax, ay), radius: r-alpha, fill: red.lighten(60%), stroke: red.darken(30%) + 1.5pt)
+        circle((ax, ay), radius: r-alpha, fill: blue.lighten(60%), stroke: blue.darken(30%) + 1.5pt)
         content((ax, ay), $alpha$)
       }
       for i in range(7) {
