@@ -1,4 +1,5 @@
 //#import "@preview/slydst:0.1.4": *
+#import "figures/reaction_cartoon.typ": reaction-cartoon
 #import "@preview/cetz:0.5.0": canvas, draw
 #import "@preview/cetz:0.5.0"
 #import "@preview/larrow:1.1.0": *
@@ -224,83 +225,6 @@
 
 ]
 
-#slide()[
-  == Cranked Skyrme Hartree Fock (cSHF) (2010s) - Specific Energy Predictions
-  #grid(
-    columns: (.5fr, 1fr),
-    gutter: 8pt,
-    inset: 6pt,
-    stroke: none,
-    // rows:(3.0cm),
-    // 2012
-
-    [
-      #align(center)[
-        #my_ref(
-          journal: "PLB",
-          volume: "738",
-          id: "401-404",
-          year: 2014,
-          url: "https://www.sciencedirect.com/science/article/pii/S0370269314007369",
-        )
-        #image("figures/screenshots/Wong2018_Fig3.jpg", height: 85%)
-      ]
-    ],
-    align(center)[
-      #v(.75cm)
-      A. Staszczak and C.-Y. Wong predict 18 Toroidal Isomers
-      #table(
-        stroke: none,
-        columns: (1cm, 3cm, 3cm, 3cm, 3cm),
-        gutter: 5pt,
-        table.hline(),
-        [], [$E^*$ [MeV]], [$I$ [$planck$]], [$d$ [fm]], [$rho_"max" slash rho_0$],
-        table.hline(),
-        [#si28], [143.18], [44], [1.45], [0.74],
-        table.hline(),
-        [#s32], [153.87], [48], [1.42], [0.76],
-        [], [193.35], [66], [1.40], [0.67],
-        table.hline(),
-        [], [168.03], [56], [1.40], [0.78],
-        [#ar36], [198.63], [72], [1.39], [0.71],
-        [], [238.56], [92], [1.37], [0.64],
-        table.hline(),
-        [#ca40], [178.36], [60], [1.40], [0.79],
-        [], [214.23], [82], [1.39], [0.73],
-        table.hline(),
-        [$dots.v$], [$dots.v$], [$dots.v$], [$dots.v$], [$dots.v$],
-        table.hline(),
-      )
-      #only(2)[
-        #place(dx: 46pt, dy: -95pt, box(stroke: red.darken(50%) + 3pt, width: 404pt, height: 30pt, radius: 10pt))
-      ]
-      #only(3)[
-        #place(dx: 285pt, dy: -280pt, box(stroke: red.darken(50%) + 3pt, width: 50pt, height: 270pt, radius: 10pt))
-      ]
-      #only(4)[
-        #place(dx: 367pt, dy: -280pt, box(stroke: red.darken(50%) + 3pt, width: 65pt, height: 270pt, radius: 10pt))
-      ]
-      #only(5)[
-        #place(dx: 95pt, dy: -280pt, box(stroke: red.darken(50%) + 3pt, width: 72pt, height: 270pt, radius: 10pt))
-      ]
-      #align(center)[
-        #only(2)[
-          #bright([Ichikawa's $bold(#ca40)$ is reproduced])
-        ]
-        #only(3)[
-          #bright([Minor axis stays about constant ($bold(d approx 1.4 "fm")$)])
-        ]
-        #only(4)[
-          #bright([Low density])
-        ]
-        #only(5)[
-          #bright([Several states to investigate, including $bold(si28 (E^* = 143 "MeV"))$])
-        ]
-      ]
-    ],
-  )
-
-]
 
 
 #slide()[
@@ -386,7 +310,7 @@
 
 #slide[
   == First Experimental Evidence (2019)
-  // footer 
+  // footer
   #place(dx: 0pt, dy: 95.75%)[ #my_ref(
     journal: "PRC",
     volume: "99",
@@ -396,56 +320,67 @@
   )]
 
   #grid(
-    ..grid_debug,
+    ..grid_default,
     columns: (2fr, 1fr),
-    align(left)[
-      *Experimental Overview*
 
-      $si28 +c12$ @ 35 MeV/u
+    [#align(center)[
+        #reaction-cartoon()
+      ]
+      #align(center + horizon)[
 
-      #v(0.4em)
-      #align()[
-        #box(stroke:black, inset:7pt,radius:18pt, [
+        #box(
+          $
+            E^*_si28 = underbrace(sum_(i) T_(alpha_i), E_"rel") - underbrace(( m_si28 - 7m_alpha ), Q) quad #text(fill:luma(30%))[$"if" 7alpha "from" si28^*$]
+          $,
+          stroke: black,
+          inset: 2pt,
+          outset: 6pt,
+          radius: 5pt,
+        )
+      ]
 
-        #canvas(length: 1cm, {
-        import draw: *
-
-        // Radii scaled as r0 * A^(1/3), r0 = 0.35
-        let r-si = 1.06  // 0.35 * 28^(1/3)
-        let r-c  = 0.80  // 0.35 * 12^(1/3)
-        let x-si = -.2
-        let x-c  =  2.0
-        let offset = 1
-
-        // Beam arrow approaching Si-28
-        line((x-si, offset), (x-si + r-si + 1.15, offset),
-          mark: (end: ">", size: 0.3),
-          stroke: gray.darken(30%) + 1pt)
-
-        // Si-28 nucleus (projectile)
-        circle((x-si, offset), radius: r-si,
-          fill: blue.lighten(60%),
-          stroke: blue.darken(25%) + 1.5pt)
-        content((x-si, offset), si28)
-
-        // C-12 nucleus (target)
-        circle((x-c, 0), radius: r-c,
-          fill: gray.lighten(60%),
-          stroke: gray.darken(25%) + 1.5pt)
-        content((x-c, 0), c12)
-
-      })])]
-    
     ],
     align(center)[
-      *Neutron Ion Multidetector For Reaction Oritented Dynamics\ (NIMROD)*
-      #v(1fr)
-      #box(radius: 15pt, clip: true, stroke: black + 3pt, image("figures/nimrod.jpg", width: 85%))
+      #uncover(2)[
+        *Neutron Ion Multidetector For Reaction Oritented Dynamics\ (NIMROD)*
+        #v(1fr)
+        #box(radius: 15pt, clip: true, stroke: black + 3pt, image("figures/nimrod.jpg", width: 85%))
+      ]
     ],
   )
 
 
 ]
+
+#slide[
+  == First Experimental Evidence (2019)
+  // footer
+  #place(dx: 0pt, dy: 95.75%)[ #my_ref(
+    journal: "PRC",
+    volume: "99",
+    id: "014606",
+    year: 2019,
+    url: "https://journals.aps.org/prc/abstract/10.1103/PhysRevC.99.014606",
+  )]
+
+  #grid(
+    ..grid_default,
+    columns: (1fr, 1fr, 1fr),
+
+    align(center)[
+      test1
+    ],
+    align(center)[
+      test2
+    ],
+    align(center)[
+      test3
+    ],
+  )
+
+
+]
+
 
 
 
