@@ -4,16 +4,27 @@
 #import "@preview/larrow:1.1.0": *
 #import "@preview/cetz-plot:0.1.2": plot
 #import "@preview/grayness:0.6.0": *
-#import "faust.typ": *
 #import "@preview/polylux:0.4.0": *
 #set page(paper: "presentation-16-9")
 #let page-footer = align(center)[
   #toolbox.slide-number
 ]
 
-#set page(footer: page-footer)
+#set page(footer: link(<outline-slide>)[#page-footer])
 
 #let lal = arrow-label.with(dx: 0mm, dy: 0mm)
+
+#let grid_default = (
+  gutter: 8pt,
+  inset: 6pt,
+  stroke: none,
+)
+
+#let grid_debug = (
+  gutter: 8pt,
+  inset: 6pt,
+  stroke: luma(90%) + 1pt,
+)
 
 #import "@preview/physica:0.9.3": isotope
 #show math.equation: set text(font: "Fira Math")
@@ -375,6 +386,30 @@
 
 #slide[
   == First Experimental Evidence (2019)
+  // footer 
+  #place(dx: 0pt, dy: 95.75%)[ #my_ref(
+    journal: "PRC",
+    volume: "99",
+    id: "014606",
+    year: 2019,
+    url: "https://journals.aps.org/prc/abstract/10.1103/PhysRevC.99.014606",
+  )]
+
+  #grid(
+    ..grid_debug,
+    columns: (2fr, 1fr),
+    align(left)[
+      *Experimental Overview*
+
+      $si28 +c12$ @ 35 MeV/u
+      
+    ],
+    align(center)[
+      *Neutron Ion Multidetector For Reaction Oritented Dynamics\ (NIMROD)*
+      #v(1fr)
+      #box(radius: 15pt, clip: true, stroke: black + 3pt, image("figures/nimrod.jpg", width: 85%))
+    ],
+  )
 
 
 ]
@@ -386,14 +421,12 @@
 #slide[
   == Creating a Mixed Event
 
-  #let box_radius = 10pt
+  #let box_radius = 8pt
   #v(.5cm)
   #grid(
     columns: (1fr, 1fr, 1fr),
-    gutter:0pt,
-    align(center)[*Real Events*],
-    align(center)[],
-    align(center)[#only("3-")[*Mixed Events*]],
+    gutter: 0pt,
+    align(center)[*Real Events*], align(center)[], align(center)[#only("3-")[*Mixed Events*]],
   )
   #grid(
     columns: (1fr, 1fr, 1fr),
@@ -401,63 +434,49 @@
 
     align(center)[
       #only("1-")[
-      #box(
-        radius:box_radius,
-        stroke:black,
-        image("faust_renders/real_1.png", width:80%),
-      )
-    ]
+        #box(
+          radius: box_radius,
+          stroke: black,
+          image("faust_renders/real_1.png", width: 80%),
+        )
+      ]
     ],
     align(center)[
       #only("2-")[
-      #box(stroke:black,
-        radius:box_radius,
-        image("faust_renders/real_hl_1.png", width:80%)
-      )
-    ]
+        #box(stroke: black, radius: box_radius, image("faust_renders/real_hl_1.png", width: 80%))
+      ]
     ],
     align(center)[
       #only("3-")[
-      #box(stroke:black,
-        radius:box_radius,
-        image("faust_renders/mixed_1.png", width:80%)
-      )
-    ]
+        #box(stroke: black, radius: box_radius, image("faust_renders/mixed_1.png", width: 80%))
+      ]
     ],
 
     align(center)[
       #only("1-")[
-      #box(stroke:black,
-        radius:box_radius,
-        image("faust_renders/real_2.png", width:80%)
-      )
+        #box(stroke: black, radius: box_radius, image("faust_renders/real_2.png", width: 80%))
       ]
     ],
     align(center)[
       #only("2-")[
-      #box(stroke:black,
-        radius:box_radius,
-        image("faust_renders/real_hl_2.png", width:80%)
-      )
+        #box(stroke: black, radius: box_radius, image("faust_renders/real_hl_2.png", width: 80%))
       ]
     ],
-    align(center+horizon)[
+    align(center + horizon)[
       #only("3-")[
-      #box(
-        text(size:34pt)[
-        $
-      dots.v
-      $
-    ]
-    )
-    ]
+        #box(
+          text(size: 34pt)[
+            $
+              dots.v
+            $
+          ],
+        )
+      ]
     ],
+
     align(center)[
       #only("1-")[
-      #box(stroke:black,
-        radius:box_radius,
-        image("faust_renders/real_4.png", width:80%)
-      )
+        #box(stroke: black, radius: box_radius, image("faust_renders/real_4.png", width: 80%))
       ]
     ],
     [],
@@ -465,98 +484,48 @@
 
     align(center)[
       #only("1-")[
-      #box(stroke:black,
-        radius:box_radius,
-        image("faust_renders/real_3.png", width:80%)
-      )
+        #box(stroke: black, radius: box_radius, image("faust_renders/real_3.png", width: 80%))
       ]
     ],
     align(center)[
       #only("2-")[
-      #box(stroke:black,
-        radius:box_radius,
-        image("faust_renders/real_hl_3.png", width:80%)
-      )
+        #box(stroke: black, radius: box_radius, image("faust_renders/real_hl_3.png", width: 80%))
       ]
     ],
     [],
-    align(center+horizon)[
+
+    align(center + horizon)[
       #only("1-")[
-      #box(
-        text(size:34pt)[
-        $
-      dots.v
-      $
-    ]
-    )
-    ]
+        #box(
+          text(size: 34pt)[
+            $
+              dots.v
+            $
+          ],
+        )
+      ]
     ],
     [],
     [],
-
   )
-  // #label-arrow(<hl1-end>, <mix-start>, 
-  //            bend: 0, 
-  //            tip: "stealth", 
-  //            from-tip: "o",
-  //            stroke: 1.5pt + red, 
-  //            from-offset: (0mm, 12.5mm),
-  //            to-offset: (-0mm, 12.5mm)
-  //          )
-  // #label-arrow(<hl2-end>, <mix-start>, 
-  //            bend: -15, 
-  //            tip: "stealth", 
-  //            from-tip: "o",
-  //            stroke: 1.5pt + red, 
-  //            from-offset: (0mm, 12.5mm),
-  //            to-offset: (-0mm, 11.5mm)
-  //          )
-  // #label-arrow(<hl3-end>, <mix-start>, 
-  //            bend: -25, 
-  //            tip: "stealth", 
-  //            from-tip: "o",
-  //            stroke: 1.5pt + red, 
-  //            from-offset: (-0mm, 12.5mm),
-  //            to-offset: (-0mm, 10mm)
-  //          )
-  //
-  // #label-arrow(<r1-end>, <hl1-start>, 
-  //            bend: 0, 
-  //            tip: "stealth", 
-  //            from-tip: "o",
-  //            stroke: 1.5pt + red, 
-  //            from-offset: (0mm, 12.5mm),
-  //            to-offset: (-0mm, 12.5mm)
-  //          )
-  // #label-arrow(<r2-end>, <hl2-start>, 
-  //            bend: 0, 
-  //            tip: "stealth", 
-  //            from-tip: "o",
-  //            stroke: 1.5pt + red, 
-  //            from-offset: (0mm, 12.5mm),
-  //            to-offset: (-0mm, 12.5mm)
-  //          )
-  // #label-arrow(<r3-end>, <hl3-start>, 
-  //            bend: 0, 
-  //            tip: "stealth", 
-  //            from-tip: "o",
-  //            stroke: 1.5pt + red, 
-  //            from-offset: (0mm, 12.5mm),
-  //            to-offset: (-0mm, 12.5mm)
-  //          )
-  //
 
 
-#place(dx:522pt, dy:-140pt)[#box(stroke:black+5pt, radius:20pt, width: 9.5cm, height:5.5cm, inset:15pt)[
-  #v(1fr)
-  #one-by-one()[
-    #text(size:20pt, weight:"bold")[$bold(dot)$]#h(.25cm) Start w/ events containing all particles][
+  #place(dx: 522pt, dy: -140pt)[#box(stroke: luma(50%) + 5pt, radius: 20pt, width: 9.5cm, height: 5.5cm, inset: 15pt)[
+    #v(1fr)
+    #one-by-one()[
+      #text(size: 20pt, weight: "bold")[$bold(dot)$]#h(.25cm) Start w/ events containing all particles][
 
-   #text(size:20pt, weight:"bold")[$bold(dot)$]#h(.25cm) Select particles from seperate events][
+      #text(size: 20pt, weight: "bold")[$bold(dot)$]#h(.25cm) Select particles from seperate events][
 
-   #text(size:20pt, weight:"bold")[$bold(dot)$]#h(.25cm) Construct new event
-  ]
-  #v(1fr)
-]]
+      #text(size: 20pt, weight: "bold")[$bold(dot)$]#h(.25cm) Construct new event
+    ]
+    #v(1fr)
+  ]]
 ]
 
+
+#slide[
+  == Outline
+  <outline-slide>
+  #outline()
+]
