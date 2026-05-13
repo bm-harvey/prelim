@@ -1,0 +1,10 @@
+input       = "detnum_corner_z_x_y_r.txt"
+theta       = -120.0
+phi         = -25.0
+roll        = 85.0
+size        = "1920x800"
+output      = "faust_renders/detectors_only"
+color       = false
+transparent = false
+highlight_hits = false
+hide_beam_downstream = false

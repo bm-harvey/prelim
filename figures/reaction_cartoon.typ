@@ -25,10 +25,10 @@
         mark: (end: ">", size: 0.3),
         stroke: gray.darken(30%) + 1pt,
       )
-      circle((x-si, offset), radius: r-si, fill: blue.lighten(60%), stroke: blue.darken(25%) + 1.5pt)
+      circle((x-si, offset), radius: r-si, fill: red.lighten(60%), stroke: red.darken(25%) + 1.5pt)
       content((x-si, offset), si28)
       circle((x-c, 0), radius: r-c, fill: gray.lighten(60%), stroke: gray.darken(25%) + 1.5pt)
-      content((x-c, 0), "Targ.")
+      content((x-c, 0), text(size:14pt, [Target]))
     })],
 
     // Arrow between panels
@@ -46,7 +46,7 @@
       circle((1.6, 0.0), radius: r-c, fill: gray.lighten(60%), stroke: gray.darken(25%) + 1.5pt)
       // content((1.6, 0.0), c12)
       // Si-28 overlapping on top
-      circle((0.8, 1.0), radius: r-si, fill: blue.lighten(60%), stroke: blue.darken(25%) + 1.5pt)
+      circle((0.8, 1.0), radius: r-si, fill: red.lighten(60%), stroke: red.darken(25%) + 1.5pt)
       // content((0.8, 0.5), si28)
     })],
 
@@ -63,8 +63,8 @@
       // content((0.8, 0.0), c12)
       // Torus Si28 on right: outer filled + inner white hole
       let x-tor = 2.9
-      circle((x-tor, 1.0), radius: r-si, fill: blue.lighten(60%), stroke: blue.darken(25%) + 1.5pt)
-      circle((x-tor, 1.0), radius: r-si * 0.40, fill: white, stroke: blue.darken(25%) + 1pt)
+      circle((x-tor, 1.0), radius: r-si, fill: red.lighten(60%), stroke: red.darken(25%) + 1.5pt)
+      circle((x-tor, 1.0), radius: r-si * 0.40, fill: white, stroke: red.darken(25%) + 1pt)
       content((x-tor, 1.6), $si28^*$)
       // Exit arrow
       line(
@@ -97,7 +97,7 @@
         let angle = 2 * calc.pi * i / 7
         let ax = cx + r-dist * calc.cos(angle)
         let ay = cy + r-dist * calc.sin(angle)
-        circle((ax, ay), radius: r-alpha, fill: blue.lighten(60%), stroke: blue.darken(30%) + 1.5pt)
+        circle((ax, ay), radius: r-alpha, fill: red.lighten(60%), stroke: red.darken(30%) + 1.5pt)
         content((ax, ay), $alpha$)
       }
       for i in range(7) {

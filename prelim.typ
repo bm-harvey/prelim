@@ -77,6 +77,8 @@
 #let be8 = $isotope("Be", a: 8)$
 #let c12 = $isotope("C", a: 12)$
 #let o16 = $isotope("O", a: 16)$
+#let ne20 = $isotope("Ne", a: 20)$
+#let mg24 = $isotope("Mg", a: 24)$
 #let li5 = $isotope("Li", a: 5)$
 #let li5 = $isotope("Li", a: 5)$
 #let si28 = $isotope("Si", a: 28)$
@@ -368,8 +370,8 @@
     ..grid_default,
     columns: (1.9fr, 2fr, 1.6fr),
     align(left)[
-      #v(1fr)
-      - Reaction 
+      #v(.5cm)
+      - Reaction
         - $si28 + c12$ @ 35 MeV/u
         - Part of 2009 experimental series
       #v(1fr)
@@ -377,7 +379,7 @@
         - 6,467 Events w/ 7$alpha$
       #v(1fr)
       - Resolution for $E^*$ from $7alpha$
-        - $~9.4$ MeV (FWHM)
+        - $~9.4$ MeV (FWHM) in ROI
         - Position insensitive detectors
       #v(1fr)
     ],
@@ -385,13 +387,13 @@
       #image("figures/cao_2019/7alphaSpectrum.png", height: 92%)
     ],
     align(left)[
-      #v(1fr)
+      #v(.5cm)
       - Nonresonant Background
         - Mixed Events
         - #dim[Shifted AMD distribution]
       #v(1fr)
       - Extracted Peaks
-        - $E^* = bold(114), bold(126), bold(138)$ MeV 
+        - $E^* = bold(114), bold(126), "&" bold(138)$ MeV
         - FWHM dominated by resolution
 
       #v(1fr)
@@ -408,12 +410,126 @@
 
 
 #slide[
-  == Followup Measurements
+  == Forward Array Using Silicon Technology (FAUST) 
+  #grid(
+    ..grid_default,
+    // ..grid_debug,
+    columns: (1fr, 1.5fr),
+    align(center + horizon)[
+      // *Forward Array Using Silicon Technology (FAUST)*
+      // #v(0.5em)
+      #grid(
+        ..grid_default,
+        columns: (2fr, 1.5fr),
+        rows:(188pt),
 
+        [
+
+          #box(
+            radius: 15pt,
+            clip: true,
+            stroke: black + 3pt,
+            image(
+              "figures/faust.png",
+              width: 110%,
+              height: 110%,
+            ),
+            width: 100%,
+            height: 100%,
+          )
+        ],
+
+        [
+          #box(
+            radius: 15pt,
+            clip: true,
+            stroke: black + 3pt,
+            image(
+              "figures/dadl.png",
+
+              width: 110%,
+              height: 110%,
+            ),
+            // width: 100%,
+            height: 100%,
+          )
+
+        ],
+      )
+      #box(stroke: black, radius: 5pt, clip: true, image("faust_renders/detectors_only.png", height: 30%))
+    ],
+    align(left)[
+      *Forward Array Using Silicon Technology (FAUST)*
+      - 68 Si-CsI(Tl) telescopes
+        - Excellent Forward Coverage #dim[($1.7 degree$-- $~40 degree$)]
+        - Lab Energy #dim[(Thick CsI stops particles)]
+        - Isotopic Particle Identification #dim[($E$--$Delta E$ technique)]
+        - Lab Angle #dim[(Dual-Axis Duo-Lateral detectors)] 
+      #v(1fr)
+      *Measured Reactions*
+      - Target: #c12
+      - Beam Energy: 35 MeV/u
+      - Projectiles 
+        - #o16, #ne20, #mg24 #dim[(Develop analytical techniques + future cluster studies)]
+        - #si28 #dim[(Andy Hannaman's thesis work -- confirm and characterize states from Cao _et al_)]
+        - #s32, #ar36 #dim[(Search for new states predicted by Wong)]
+
+      #v(1fr)
+
+    ],
+  )
+  #v(1fr)
 ]
 
 #slide[
+  == Second Experimental Result (2023)
+  // footer
+  #place(dx: 0pt, dy: 95.75%)[ #my_ref(
+    journal: "PRC",
+    volume: "99",
+    id: "014606",
+    year: 2019,
+    url: "https://journals.aps.org/prc/abstract/10.1103/PhysRevC.99.014606",
+  )]
+
+  #grid(
+    ..grid_default,
+    columns: (1.9fr, 2fr, 1.6fr),
+    align(left)[
+      #v(.5cm)
+      - Reaction
+        - $si28 + c12$ @ 35 MeV/u
+        - Dedicated measurement for toroidal search
+      #v(1fr)
+      - Sample Size
+        - 187,067 Events w/ 7$alpha$ ($"x"29arrow.t$)
+      #v(1fr)
+      - Resolution for $E^*$ from $7alpha$
+        - $~2.5$ MeV (FWHM) in ROI ($"x"3.5arrow.b$)
+      #v(1fr)
+    ],
+    align(center+horizon)[
+      #image("figures/hannaman_2023/7alphaSpectrum.png", width: 100%)
+    ],
+    align(left)[
+      #v(.5cm)
+      - No obvious peaks in the raw spectrum.
+
+      #v(1fr)
+      - Backgrounds
+        - AMD 
+          - Model dependence
+          - Wrong mean energy
+        - Mixed Events
+          - Known bias (especially at low energy)
+      #v(1fr)
+      *A physically motivated and well benchmarked data driven background estimate is desired for confident interpretation*
+    ],
+  )
+]
+#slide[
   == Creating a Mixed Event
+
 
   #let box_radius = 8pt
   #v(.5cm)
