@@ -3,7 +3,7 @@
  theta       = -120.0
  phi         = -25.0
  roll        = 85.0
- size        = "3840x2160"
+ size        = "1920x1080"
  output      = "faust_renders/example_scene"
  color       = false
  transparent = false

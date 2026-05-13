@@ -1,0 +1,60 @@
+input       = "detnum_corner_z_x_y_r.txt"
+theta       = -120.0
+phi         = -25.0
+roll        = 85.0
+size        = "1920x800"
+output      = "faust_renders/alpha_particles"
+color       = false
+transparent = false
+highlight_hits = false
+hide_beam_downstream = false
+hide_detectors = true
+
+[[track]]
+theta     = 16.8
+phi       = 117.6
+length    = 9.1
+rgb       = [220, 80, 20]
+thickness = "thin"
+
+[[track]]
+theta     = 8.2
+phi       = 153.8
+length    = 33.1
+rgb       = [220, 80, 20]
+thickness = "thin"
+
+[[track]]
+theta     = 12.7
+phi       = 296.1
+length    = 12.2
+rgb       = [220, 80, 20]
+thickness = "thin"
+
+[[track]]
+theta     = 7.5
+phi       = 51.0
+length    = 13.5
+rgb       = [220, 80, 20]
+thickness = "thin"
+
+[[track]]
+theta     = 6.8
+phi       = 185.7
+length    = 21.3
+rgb       = [220, 80, 20]
+thickness = "thin"
+
+[[track]]
+theta     = 9.2
+phi       = 273.5
+length    = 15.3
+rgb       = [220, 80, 20]
+thickness = "thin"
+
+[[track]]
+theta     = 16.9
+phi       = 351.5
+length    = 18.0
+rgb       = [220, 80, 20]
+thickness = "thin"

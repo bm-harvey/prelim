@@ -3,7 +3,7 @@
  theta       = -120.0
  phi         = -25.0
  roll        = 85.0
- size        = "3840x1600"
+ size        = "1920x800"
  output      = "faust_renders/mixed_1"
  color       = false
  transparent = false
