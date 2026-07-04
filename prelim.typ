@@ -13,7 +13,10 @@
 
 #set page(footer: link(<outline-slide>)[#page-footer])
 
+// #let #place_ref(body) = #place(dx: 0pt, dy: 95.75%)[body]
 #let lal = arrow-label.with(dx: 0mm, dy: 0mm)
+
+#let slateblue = rgb(106, 90, 205)
 
 #let grid_default = (
   gutter: 8pt,
@@ -31,7 +34,8 @@
 #show math.equation: set text(font: "Fira Math")
 #set text(font: "Fira Sans", size: 16pt)
 #show heading.where(level: 2): set text(22pt, red.darken(50%))
-#show heading.where(level: 3): set text(18pt, red.darken(50%))
+// #show heading.where(level: 3): set text(18pt, red.darken(50%))
+#show heading.where(level: 3): set text(18pt, black)
 #set page(margin: 0.5in)
 //#show
 
@@ -63,8 +67,8 @@
 }
 
 #let dim(body) = {
-  set text(gray.darken(30%))
-  [_ #body _]
+  set text(fill: gray.darken(30%))
+  [ #body ]
 }
 
 #let bright(body) = {
@@ -114,20 +118,20 @@
 ]
 
 // template
-#slide()[
-  == Title
-  #grid(
-    columns: (1fr, 1fr),
-    gutter: 8pt,
-    inset: 6pt,
-    stroke: none,
-    // 2012
-    align()[
-    ],
-    align()[
-    ],
-  )
-]
+// #slide()[
+//   == Title
+//   #grid(
+//     columns: (1fr, 1fr),
+//     gutter: 8pt,
+//     inset: 6pt,
+//     stroke: none,
+//     // 2012
+//     align()[
+//     ],
+//     align()[
+//     ],
+//   )
+// ]
 
 #slide()[
   == Liquid Drop Model (1970s) - Original Theory
@@ -177,11 +181,11 @@
     ],
     align(left)[
       #v(1fr)
-      - Direct collisions produced outwardly expanding toroids.
+      - Direct collisions produced outwardly expanding rings.
       #v(1fr)
-      - Toroids seem to be metastablalized
+      - Ring expansions temporarily slowed
       #v(1fr)
-      - Decay into symmetric particles
+      - Eventual decay into symmetric particles
         - $r_"particle" approx d_"toroid"$
       #v(1fr)
     ],
@@ -189,7 +193,15 @@
 ]
 
 #slide()[
-  == Cranked Skyrme Hartree Fock (cSHF) (2010s) - Specific Energy Predictions
+  #place(dx: 0pt, dy: 95.75%)[
+    #my_ref(
+      journal: "PRL",
+      volume: "109",
+      id: "232503",
+      year: 2012,
+      url: "https://journals.aps.org/prl/pdf/10.1103/PhysRevLett.109.232503",
+    )
+  ]
   #grid(
     columns: (.8fr, 1fr),
     gutter: 8pt,
@@ -201,18 +213,13 @@
     [
       #align(left)[
         #image("figures/screenshots/Ichikawa2012_Fig1.png", width: 95%)
-        #my_ref(
-          journal: "PRL",
-          volume: "109",
-          id: "232503",
-          year: 2012,
-          url: "https://journals.aps.org/prl/pdf/10.1103/PhysRevLett.109.232503",
-        )
         - Predicted state in #ca40
           - $J_z=60 planck$
           - $E^* approx 175 "MeV"$
 
-        - Angular momentum and mass consistent with Wong's LDM
+        #uncover(2)[
+          Angular momentum and mass consistent with Wong's LDM
+        ]
       ]
     ],
     align(center)[
@@ -230,7 +237,16 @@
 
 
 #slide()[
-  == Cranked Skyrme Hartree Fock (cSHF) (2010s) - Specific Energy Predictions
+  == Cranked Skyrme Hartree Fock (cSHF) (2010s) - Specific State Predictions
+  #place(dx: 0pt, dy: 95.75%)[
+    #my_ref(
+      journal: "PLB",
+      volume: "738",
+      id: "401-404",
+      year: 2014,
+      url: "https://www.sciencedirect.com/science/article/pii/S0370269314007369",
+    )
+  ]
   #grid(
     columns: (.5fr, 1fr),
     gutter: 8pt,
@@ -240,15 +256,24 @@
     // 2012
 
     [
-      #align(center)[
-        #my_ref(
-          journal: "PLB",
-          volume: "738",
-          id: "401-404",
-          year: 2014,
-          url: "https://www.sciencedirect.com/science/article/pii/S0370269314007369",
-        )
-        #image("figures/screenshots/Wong2018_Fig3.jpg", height: 85%)
+      #align(left)[
+        #only(1)[#align(center)[#image("figures/screenshots/Wong2018_Fig3.jpg", height: 85%)]]
+        #only("2-")[
+          #v(1fr)
+          - Ichikawa's state is reproduced
+          #v(1fr)
+          - Many predicitons $=>$ trends
+            - Large low density states
+            - Minor axis radius $~$ $alpha$ radius
+            
+          #box(radius:10pt, stroke: black, inset:10pt, [Toroidal states, should they exist, might decay through several $alpha$ particles])
+
+          #v(1fr)
+          - Many states to look for
+      
+
+          #v(1fr)
+        ]
       ]
     ],
     align(center)[
@@ -348,6 +373,7 @@
         *Neutron Ion Multidetector For Reaction Oritented Dynamics\ (NIMROD)*
         #v(1fr)
         #box(radius: 15pt, clip: true, stroke: black + 3pt, image("figures/nimrod.jpg", width: 85%))
+        $si28 + c12$ @ 35 MeV/u
       ]
     ],
   )
@@ -356,7 +382,7 @@
 ]
 
 #slide[
-  == First Experimental Evidence (2019)
+  == First Experimental Evidence (2019) - Cao _et al._, JBN Group
   // footer
   #place(dx: 0pt, dy: 95.75%)[ #my_ref(
     journal: "PRC",
@@ -410,7 +436,7 @@
 
 
 #slide[
-  == Forward Array Using Silicon Technology (FAUST) 
+  == Forward Array Using Silicon Technology (FAUST)
   #grid(
     ..grid_default,
     // ..grid_debug,
@@ -421,7 +447,7 @@
       #grid(
         ..grid_default,
         columns: (2fr, 1.5fr),
-        rows:(188pt),
+        rows: 188pt,
 
         [
 
@@ -464,16 +490,22 @@
         - Excellent Forward Coverage #dim[($1.7 degree$-- $~40 degree$)]
         - Lab Energy #dim[(Thick CsI stops particles)]
         - Isotopic Particle Identification #dim[($E$--$Delta E$ technique)]
-        - Lab Angle #dim[(Dual-Axis Duo-Lateral detectors)] 
+        - Lab Angle #dim[(Dual-Axis Duo-Lateral detectors)]
       #v(1fr)
-      *Measured Reactions*
-      - Target: #c12
-      - Beam Energy: 35 MeV/u
-      - Projectiles 
-        - #o16, #ne20, #mg24 #dim[(Develop analytical techniques + future cluster studies)]
-        - #si28 #dim[(Andy Hannaman's thesis work -- confirm and characterize states from Cao _et al_)]
-        - #s32, #ar36 #dim[(Search for new states predicted by Wong)]
-
+      #only(1)[
+        #align(center)[
+          #image("figures/FAUST_3D_2.png", height: 60%)
+        ]
+      ]
+      #only(2)[
+        *Measured Reactions*
+        - Target: #c12
+        - Beam Energy: 35 MeV/u
+        - Projectiles
+          - #o16, #ne20, #mg24 #dim[(Develop analytical techniques + future cluster studies)]
+          - #si28 #dim[(Andy Hannaman's thesis work -- confirm and characterize states from Cao _et al_)]
+          - #s32, #ar36 #dim[(Search for new states predicted by Wong)]
+      ]
       #v(1fr)
 
     ],
@@ -508,25 +540,75 @@
         - $~2.5$ MeV (FWHM) in ROI ($"x"3.5arrow.b$)
       #v(1fr)
     ],
-    align(center+horizon)[
+    align(center + horizon)[
       #image("figures/hannaman_2023/7alphaSpectrum.png", width: 100%)
     ],
     align(left)[
       #v(.5cm)
       - No obvious peaks in the raw spectrum.
+      
 
       #v(1fr)
-      - Backgrounds
-        - AMD 
-          - Model dependence
-          - Wrong mean energy
+      - Need Background
+        // - AMD
+        - Simulations
+          - Systematics  hard to constrain
         - Mixed Events
-          - Known bias (especially at low energy)
+          - Known bias (see next slides)
       #v(1fr)
-      *A physically motivated and well benchmarked data driven background estimate is desired for confident interpretation*
+      *A physically motivated, well benchmarked, and data driven background estimate is required for confident interpretation*
     ],
   )
 ]
+
+#slide[
+  == One way we know mixed events are imperfect (for this purpose)
+  #grid(
+    ..grid_default,
+    columns: (1fr, 2fr),
+    [
+      === A Case Study on $d$-$d$-$d$
+      // #text(size:10pt)[taken from $isotope("O", a:16) + isotope("C", a:"nat")$ data.]
+
+      Any signals should be *rare to nonexistent*
+
+
+      #text(size: 12pt)[
+        High energy excitation, deexciting by unlikely channel twice
+      ]
+      #text(size: 12pt, fill: luma(50%))[
+        - $Q(isotope("Li", a: 6)->3d) = -25.32 "MeV"$
+        - $Q(alpha->2d) = -23.84 "MeV"$
+        - $Q(d->p n) = -2.22 "MeV"$
+      ]
+      #box(
+        [$
+          & isotope("Li", a: 6)(E^* > 25.32 "MeV") \
+          \
+          & #h(1.5cm)->alpha^*(E^*>23.8 "MeV") \
+          & #h(2cm) + #h(.5em)d(E^*<2.2 "MeV") \
+          \
+          & #h(1.5cm)->3d(E^*< 2.2 "MeV") \
+        $],
+        stroke: black,
+        inset: 5pt,
+        radius: 5pt,
+      )
+
+      $
+        "Total" = "Background"+#strike("Signal")
+      $
+
+
+      #v(1fr)
+    ],
+    [
+      #image("figures/3d/3d_summary_1_real.png", height: 85%)
+    ],
+  )
+]
+
+
 #slide[
   == Creating a Mixed Event
 
@@ -536,7 +618,7 @@
   #grid(
     columns: (1fr, 1fr, 1fr),
     gutter: 0pt,
-    align(center)[*Real Events*], align(center)[], align(center)[#only("3-")[*Mixed Events*]],
+    align(center)[*Real Events*], align(center)[#only("2-")[*Selected Events*]], align(center)[#only("3-")[*Mixed Events*]],
   )
   #grid(
     columns: (1fr, 1fr, 1fr),
@@ -632,6 +714,435 @@
     #v(1fr)
   ]]
 ]
+
+#slide[
+  == One way we know mixed events are imperfect (for this purpose)
+
+  #grid(
+    ..grid_default,
+    columns: (1fr, 2fr),
+    [
+      === A Case Study on $d$-$d$-$d$
+
+      #v(1fr)
+      $
+        #text(fill: blue)[Mixed] != "Total"
+      $
+
+      #v(1fr)
+      - Mixed Events removes particle-particle correlations including
+        - 3-particle resonances (good)
+        - Coulomb repulsion (bad)
+        - 2-particle resonances (bad)
+
+      #v(1fr)
+      - Need a way to #text(fill: red)[*remove 3-particle*] correlations while *preserving 2-particle* correlations
+
+
+      #v(1fr)
+    ],
+    [
+      #image("figures/3d/3d_summary_2_real_mixed.png", height: 85%)
+    ],
+  )
+]
+
+#slide[
+  == Creating a _Partially_ Mixed Event [FIXME IMAGES]
+
+
+  #let box_radius = 8pt
+  #v(.5cm)
+  #grid(
+    columns: (1fr, 1fr, 1fr),
+    gutter: 0pt,
+    align(center)[*Real Events*], align(center)[*Selected Events*], align(center)[#only("3-")[*Mixed Events*]],
+  )
+  #grid(
+    columns: (1fr, 1fr, 1fr),
+    rows: 2.3cm,
+
+    align(center)[
+      #only("1-")[
+        #box(
+          radius: box_radius,
+          stroke: black,
+          image("faust_renders/real_1.png", width: 80%),
+        )
+      ]
+    ],
+    align(center)[
+      #only("2-")[
+        #box(stroke: black, radius: box_radius, image("faust_renders/real_hl_1.png", width: 80%))
+      ]
+    ],
+    align(center)[
+      #only("3-")[
+        #box(stroke: black, radius: box_radius, image("faust_renders/mixed_1.png", width: 80%))
+      ]
+    ],
+
+    align(center)[
+      #only("1-")[
+        #box(stroke: black, radius: box_radius, image("faust_renders/real_2.png", width: 80%))
+      ]
+    ],
+    align(center)[
+      #only("2-")[
+        // #box(stroke: black, radius: box_radius, image("faust_renders/real_hl_2.png", width: 80%))
+      ]
+    ],
+    align(center + horizon)[
+      #only("3-")[
+        #box(
+          text(size: 34pt)[
+            $
+              dots.v
+            $
+          ],
+        )
+      ]
+    ],
+
+    align(center)[
+      #only("1-")[
+        #box(stroke: black, radius: box_radius, image("faust_renders/real_4.png", width: 80%))
+      ]
+    ],
+    [],
+    [],
+
+    align(center)[
+      #only("1-")[
+        #box(stroke: black, radius: box_radius, image("faust_renders/real_3.png", width: 80%))
+      ]
+    ],
+    align(center)[
+      #only("2-")[
+        #box(stroke: black, radius: box_radius, image("faust_renders/real_hl_3.png", width: 80%))
+      ]
+    ],
+    [],
+
+    align(center + horizon)[
+      #only("1-")[
+        #box(
+          text(size: 34pt)[
+            $
+              dots.v
+            $
+          ],
+        )
+      ]
+    ],
+    [],
+    [],
+  )
+
+
+  #place(dx: 522pt, dy: -140pt)[#box(stroke: luma(50%) + 5pt, radius: 20pt, width: 9.5cm, height: 5.5cm, inset: 15pt)[
+    #v(1fr)
+    #one-by-one()[
+      #text(size: 20pt, weight: "bold")[$bold(dot)$]#h(.25cm) Start w/ events containing all particles][
+
+      #text(size: 20pt, weight: "bold")[$bold(dot)$]#h(.25cm) Select particles from seperate events][
+
+      #text(size: 20pt, weight: "bold")[$bold(dot)$]#h(.25cm) Construct new event
+    ]
+    #v(1fr)
+  ]]
+]
+#slide[
+  == Incorporating one of the $bold(d)$--$bold(d)$ correlations
+
+  #grid(
+    ..grid_default,
+    columns: (1fr, 2fr),
+    [
+      === A Case Study on $d$-$d$-$d$
+      #v(0.5cm)
+
+      - Partial mixing (PM) provides a minor improvement over full mixing (FM).
+
+
+      #v(1fr)
+      *Number of $bold(d)$--$bold(d)$ correlations*
+      #box(
+        [
+          *Real:* $binom(3, 2) = 3$
+          #v(0.5cm)
+          #place(dx:0pt, dy:-31pt, line(stroke:black + 3pt, length :2.3em))
+          #text(fill:slateblue)[*Partially Mixed:*] $binom(2, 2) + binom(1, 2)= 1$
+          #place(dx:0pt, dy:-17pt, line(stroke:(paint:slateblue, thickness: 3pt, dash:"dashed"), length :7em))
+          #v(0.5cm)
+          #text(fill: slateblue)[*Mixed:*] 3$binom(1, 2) = 0$
+          #place(dx:0pt, dy:2pt, line(stroke:slateblue + 3pt, length :3em))
+        ],
+        stroke: black,
+        inset: 15pt,
+        radius: 5pt,
+      )
+      #v(1fr)
+      - PM is $~1/3$ of the way between FM and Real in the inverse CDF
+      #v(1fr)
+    ],
+    [
+      #image("figures/3d/3d_summary_3_real_mixed_partial.png", height: 85%)
+    ],
+  )
+]
+
+#slide[
+  == Novel Estimation of the Nonresonant Background
+
+  #grid(
+    ..grid_default,
+    columns: (1fr, 2fr),
+    [
+      === A Case Study on $d$-$d$-$d$
+      #v(1cm)
+
+      #box(
+        [
+          + Measure systematic change by adding a 2-particle correlation through the change from FM to PM.
+
+          + Propogate that systematic change an additional 2 times to account for all three 2-particle correlations
+        ],
+        stroke: black,
+        radius: 5pt,
+        inset: 5pt,
+      )
+
+      - Quantile Matching: Horizontal shifts in the CDF
+        - Used a lot in climate change studies
+
+      #v(1fr)
+    ],
+    [
+      #image("figures/3d/3d_summary_4_real_mixed_partial_bg.png", height: 85%)
+    ],
+  )
+]
+#slide[
+  == Statistical Check
+
+  #grid(
+    ..grid_default,
+    columns: (1fr, 1fr),
+    [
+      #v(1cm)
+      #image("figures/3d/3d.png", height: 85%)
+
+
+
+      #v(1fr)
+    ],
+    [
+      Does the *#text(fill: red)[Background]* match the *Total Real*?
+      - 'Zero Parameter Fit'
+
+      - $bold(chi^2 slash "dof" = 0.96)$  (1 is ideal)
+
+      - $bold(P = 0.4998)$ (0.5 is ideal)
+        - Resample the model, and assess how often a more extreme $chi^2 slash"dof"$ is observed
+
+      #box(
+        [The background spectrum is statistically consistent with the measured spectrum.],
+        stroke: black,
+        radius: 5pt,
+        inset: 5pt,
+      )
+
+      *Real:* Allowed to have 3-particle correlations, but physically shouldn't
+
+      #text(fill: red)[*Background:*] Constructed in the absence of 3-particle correlations.
+
+    ],
+  )
+]
+
+#slide[
+  == Another Case Study: $bold(p)$--$bold(t)$--$bold(alpha)$ (No Signal)
+
+  #grid(
+    ..grid_default,
+    columns: (1fr, 1fr),
+    [
+      #v(1cm)
+      #image("figures/pta/pta_figure4_no_signal_mcmc.png", height: 85%)
+
+
+
+      #v(1fr)
+    ],
+    [
+      *Does the #text(fill: red)[BG] match the Total Real?*
+
+      #v(1fr)
+      - $bold(chi^2 slash "dof" = 1.23)$  (1 is ideal)
+
+      - $bold(P = 0.0005)$ (0.5 is ideal)
+
+      #v(1fr)
+      #box(
+        [The data is inconsistent with a description of the data that excludes signals.],
+        stroke: black,
+        radius: 5pt,
+        inset: 5pt,
+      )
+
+      #v(1fr)
+      - A modified model which includes 3-particle correlations is necassary
+      #v(1fr)
+
+
+    ],
+  )
+]
+
+#slide[
+  == Another Case Study: $bold(p)$--$bold(t)$--$bold(alpha)$ (Crude Double Gaussian)
+
+  #grid(
+    ..grid_default,
+    columns: (1fr, 1fr),
+    [
+      #v(1cm)
+      #image("figures/pta/pta_figure4_signal_bands_mcmc.png", height: 85%)
+
+
+      #v(1fr)
+    ],
+    [
+      Very crude (and not fully optimized) double-Gaussian model for signal
+
+      #v(1fr)
+      - $bold(chi^2 slash "dof" = 1.13)$  (1 is ideal)
+
+      - $bold(P = "[TBD]")$ (0.5 is ideal)
+
+      #v(1fr)
+      #box(
+        [The data is consistent with a description of the data that includes a double Gaussian signal.],
+        stroke: black,
+        radius: 5pt,
+        inset: 5pt,
+      )
+
+      #v(1fr)
+      #text(
+        size: 12pt,
+      )[_Disclaimer: Many details were brushed under the rug here. This fit is actually rather complicated._]
+
+
+    ],
+  )
+]
+
+#slide[
+  == $bold(7alpha)$ $bold(E^*)$ spectrum (no signal model)
+
+  #grid(
+    ..grid_default,
+    columns: (1fr, 1fr),
+    [
+      #v(1cm)
+      #image("figures/7a/7a.png", height: 85%)
+
+
+      #v(1fr)
+    ],
+    [
+      *Number of $bold(alpha)$--$bold(alpha)$ correlations*
+      #box(
+        [
+          *Real:* $binom(7, 2) = 21$
+          #v(0.5cm)
+          #place(dx:0pt, dy:-31pt, line(stroke:black + 3pt, length :2.3em))
+          #text(fill:slateblue)[*Partially Mixed:*] $binom(6, 2) + binom(1, 2)= 1$
+          #place(dx:0pt, dy:-17pt, line(stroke:(paint:slateblue, thickness: 3pt, dash:"dashed"), length :7em))
+          #v(0.5cm)
+          #text(fill: slateblue)[*Mixed:*] 7$binom(1, 2) = 0$
+          #place(dx:0pt, dy:2pt, line(stroke:slateblue + 3pt, length :3em))
+        ],
+        stroke: black,
+        inset: 15pt,
+        radius: 5pt,
+      )
+
+      - Partial mixing incorporates $15 slash 21$ of the two-particle correlations
+
+      - Imperfect, but decent fit
+        - $bold(chi^2 slash "dof" = 1.15)$  (1 is ideal)
+        - $bold(P = 0.028)$ (0.5 is ideal)
+
+      - Minor deviation at low energy
+        - Detector hit pattern bias
+    ],
+  )
+]
+#slide[
+  == $bold(7alpha)$ $bold(E^*)$ spectrum (no signal model; hit pattern corrected)
+
+  #grid(
+    ..grid_default,
+    columns: (1fr, 1fr),
+    [
+      #v(1cm)
+      #image("figures/7a/7a_preserve_mix.png", height: 85%)
+
+
+      #v(1fr)
+    ],
+    [
+
+      #v(1fr)
+      - Modify mixing procedure so FM and PM result in same per-event hit pattern as the real data
+
+      #v(1fr)
+      - Great description of the data
+        - $bold(chi^2 slash "dof" = 1.09)$  (1 is ideal)
+        - $bold(P = 0.52)$ (0.5 is ideal)
+
+      #v(1fr)
+      - No percievable systematic deviations
+      #v(1fr)
+    ],
+  )
+]
+
+#slide[
+  // == Conclusions (so far)
+
+  #grid(
+    ..grid_default,
+    columns: (1fr, 1fr),
+    [
+      == Conclusions
+      #v(1fr)
+      - Toroidal nuclei are exciting nuclear structures with decades of theoretical support.
+
+      #v(1fr)
+      - Experimental investigations in 2018 motivated a series higher precision measurements of $N alpha$ $E^*$ spectra, searching for toroidal isomers in $si28$, $s32$, and $ar36$.
+
+
+      #v(1fr)
+    ],
+    [
+
+      #v(1fr)
+      - Deeper investigation of the biases of mixed events led to a much more accurate description of the background.
+
+      #v(1fr)
+      - No evidence for toroidal states was observed in the $7alpha$ $E^*$ distribution of $si28 + c12$ @ 35 MeV/u.
+        - Upper limits studies are to follow
+        - The $N alpha$ systems of the $s32$ and $ar36$ data are slated to be analyzed shortly
+      #v(1fr)
+    ],
+  )
+]
+
+
 
 
 
