@@ -1,4 +1,4 @@
-//#import "@preview/slydst:0.1.4": *
+#import "@preview/slydst:0.1.4": *
 #import "figures/reaction_cartoon.typ": reaction-cartoon
 #import "@preview/cetz:0.5.0": canvas, draw
 #import "@preview/cetz:0.5.0"
@@ -1072,12 +1072,17 @@
 
       - Partial mixing incorporates $15 slash 21$ of the two-particle correlations
 
-      - Imperfect, but decent fit
-        - $bold(chi^2 slash "dof" = 1.15)$  (1 is ideal)
-        - $bold(P = 0.028)$ (0.5 is ideal)
+      #v(1fr)
+      - Visually, very good description
 
+      // - Imperfect fit
+      //   - $bold(chi^2 slash "dof" = 1.35)$  (1 is ideal)
+      //   - $bold(P = 0.005)$ (0.5 is ideal)
+
+      #v(1fr)
       - Minor deviation at low energy
         - Detector hit pattern bias
+      #v(1fr)
     ],
   )
 ]
@@ -1106,6 +1111,8 @@
 
       #v(1fr)
       - No percievable systematic deviations
+        - *Measured $7alpha$ distribution is statistically consistent with no peaks*
+        - Further work needed to set upper limits of detection
       #v(1fr)
     ],
   )
