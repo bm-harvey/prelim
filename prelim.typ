@@ -135,6 +135,28 @@
 
 #slide()[
   == Liquid Drop Model (1970s) - Original Theory
+  #only("2-")[
+    #place(dx: 0%, dy: 95.75%)[
+      #my_ref(
+        journal: "Ann. Phys.",
+        volume: "77(1-2)",
+        id: "279-353",
+        year: 1973,
+        url: "https://www.sciencedirect.com/science/article/pii/000349167390420X",
+      )
+    ]
+  ]
+  #only("3-")[
+    #place(dx: 25%, dy: 95.75%)[
+      #my_ref(
+        journal: "Phys. Rev. C",
+        volume: "17",
+        id: "331",
+        year: 1978,
+        url: "https://journals.aps.org/prc/abstract/10.1103/PhysRevC.17.331",
+      )
+    ]
+  ]
   #grid(
     columns: (1fr, 1fr),
     gutter: 8pt,
@@ -162,7 +184,7 @@
     align(center)[
       // #image("figures/screenshots/Wong1973_Fig1_cap.png", height:90%)
       #uncover(3)[
-        #image("figures/screenshots/Wong1978_Fig7.png", width: 103%)
+        #image("figures/screenshots/Wong1978_Fig7.png", width: 97%)
       ]
     ],
   )
@@ -170,6 +192,15 @@
 
 #slide()[
   == Boltzmann-Uehling-Uhlenbeck (BUU)  (1990s) - Dyanamic Formation
+  #place(dx: 0%, dy: 95.75%)[
+    #my_ref(
+      journal: "Nuc. Phys. A",
+      volume: "569(3)",
+      id: "575-602",
+      year: 1994,
+      url: "https://www.sciencedirect.com/science/article/pii/0375947494903204",
+    )
+  ]
   #grid(
     columns: (1fr, 1fr),
     gutter: 8pt,
@@ -193,9 +224,10 @@
 ]
 
 #slide()[
+  == Cranked Skyrme Hartree Fock (cSHF) (2010s) - Specific State Predictions
   #place(dx: 0pt, dy: 95.75%)[
     #my_ref(
-      journal: "PRL",
+      journal: "Phys. Rev. Lett.",
       volume: "109",
       id: "232503",
       year: 2012,
@@ -217,16 +249,18 @@
           - $J_z=60 planck$
           - $E^* approx 175 "MeV"$
 
+        #v(1fr)
         #uncover(2)[
           Angular momentum and mass consistent with Wong's LDM
         ]
+        #v(1fr)
       ]
     ],
     align(center)[
       #block[
         #uncover(2)[
-          #image("figures/screenshots/Wong1978_Fig7.png", width: 85%)
-          #place(dx: 75pt, dy: -80pt)[#circle(radius: 6pt, stroke: red.darken(60%) + 3pt)]
+          #image("figures/screenshots/Wong1978_Fig7.png", width: 94%)
+          #place(dx: 79pt, dy: -93pt)[#circle(radius: 6pt, stroke: red.darken(60%) + 3pt)]
         ]
       ]
     ],
@@ -240,13 +274,20 @@
   == Cranked Skyrme Hartree Fock (cSHF) (2010s) - Specific State Predictions
   #place(dx: 0pt, dy: 95.75%)[
     #my_ref(
-      journal: "PLB",
+      journal: "Phys. Lett. B",
       volume: "738",
       id: "401-404",
       year: 2014,
       url: "https://www.sciencedirect.com/science/article/pii/S0370269314007369",
     )
   ]
+  #place(dx: 25%, dy: 95.75%)[ #my_ref(
+    journal: "Phys. Rev. C",
+    volume: "99",
+    id: "014606",
+    year: 2019,
+    url: "https://journals.aps.org/prc/abstract/10.1103/PhysRevC.99.014606",
+  )]
   #grid(
     columns: (.5fr, 1fr),
     gutter: 8pt,
@@ -265,12 +306,17 @@
           - Many predicitons $=>$ trends
             - Large low density states
             - Minor axis radius $~$ $alpha$ radius
-            
-          #box(radius:10pt, stroke: black, inset:10pt, [Toroidal states, should they exist, might decay through several $alpha$ particles])
+
+          #box(
+            radius: 10pt,
+            stroke: black,
+            inset: 10pt,
+            [Toroidal states, should they exist, might decay through several $alpha$ particles],
+          )
 
           #v(1fr)
           - Many states to look for
-      
+
 
           #v(1fr)
         ]
@@ -308,10 +354,7 @@
         #place(dx: 285pt, dy: -280pt, box(stroke: red.darken(50%) + 3pt, width: 50pt, height: 270pt, radius: 10pt))
       ]
       #only(4)[
-        #place(dx: 367pt, dy: -280pt, box(stroke: red.darken(50%) + 3pt, width: 65pt, height: 270pt, radius: 10pt))
-      ]
-      #only(5)[
-        #place(dx: 95pt, dy: -280pt, box(stroke: red.darken(50%) + 3pt, width: 72pt, height: 270pt, radius: 10pt))
+        #place(dx: 283pt, dy: -280pt, box(stroke: red.darken(50%) + 3pt, width: 160pt, height: 270pt, radius: 10pt))
       ]
       #align(center)[
         #only(2)[
@@ -322,8 +365,6 @@
         ]
         #only(4)[
           #bright([Low density])
-        ]
-        #only(5)[
           #bright([Several states to investigate, including $bold(si28 (E^* = 143 "MeV"))$])
         ]
       ]
@@ -385,7 +426,7 @@
   == First Experimental Evidence (2019) - Cao _et al._, JBN Group
   // footer
   #place(dx: 0pt, dy: 95.75%)[ #my_ref(
-    journal: "PRC",
+    journal: "Phys. Rev. C",
     volume: "99",
     id: "014606",
     year: 2019,
@@ -517,9 +558,9 @@
   == Second Experimental Result (2023)
   // footer
   #place(dx: 0pt, dy: 95.75%)[ #my_ref(
-    journal: "PRC",
-    volume: "99",
-    id: "014606",
+    journal: "Phys. Rev. C",
+    volume: "109",
+    id: "054615",
     year: 2019,
     url: "https://journals.aps.org/prc/abstract/10.1103/PhysRevC.99.014606",
   )]
@@ -543,22 +584,45 @@
     align(center + horizon)[
       #image("figures/hannaman_2023/7alphaSpectrum.png", width: 100%)
     ],
+    // align(left)[
+    //   #v(.5cm)
+    //   - No obvious peaks in the raw spectrum.
+    //
+    //
+    //   #v(1fr)
+    //   - Need Background
+    //     // - AMD
+    //     - Simulations
+    //       - Systematics  hard to constrain
+    //     - Mixed Events
+    //       - Known bias (see next slides)
+    //   #v(1fr)
+    //   *A physically motivated, well benchmarked, and data driven background estimate is required for confident interpretation*
+    // ],
     align(left)[
       #v(.5cm)
-      - No obvious peaks in the raw spectrum.
-      
+      - *No obvious peaks in the raw spectrum.*
+        - Despite being more sensitve measurement
 
+      #only(2)[
       #v(1fr)
-      - Need Background
-        // - AMD
-        - Simulations
-          - Systematics  hard to constrain
-        - Mixed Events
-          - Known bias (see next slides)
+      - Simulated Background
+        - Systematics  hard to constrain
       #v(1fr)
-      *A physically motivated, well benchmarked, and data driven background estimate is required for confident interpretation*
+      - Mixed Events Background
+        - Known bias (see next slides)
+      #v(1fr)
+
+      - Original analysis suggests peaks must be smaller or broader than originally suggested.
+    ]
+
+      // *A physically motivated, well benchmarked, and data driven background estimate is required for confident interpretation*
     ],
   )
+]
+
+#focus-slide[
+       *A physically motivated, well benchmarked, and data driven background estimate is required for confident interpretation of the $bold(N alpha)$ $bold(E*)$ spectra*
 ]
 
 #slide[
@@ -618,7 +682,9 @@
   #grid(
     columns: (1fr, 1fr, 1fr),
     gutter: 0pt,
-    align(center)[*Real Events*], align(center)[#only("2-")[*Selected Events*]], align(center)[#only("3-")[*Mixed Events*]],
+    align(center)[*Real Events*],
+    align(center)[#only("2-")[*Selected Events*]],
+    align(center)[#only("3-")[*Mixed Events*]],
   )
   #grid(
     columns: (1fr, 1fr, 1fr),
@@ -722,11 +788,10 @@
     ..grid_default,
     columns: (1fr, 2fr),
     [
-      === A Case Study on $d$-$d$-$d$
 
       #v(1fr)
       $
-        #text(fill: blue)[Mixed] != "Total"
+        #text(fill: slateblue, weight:"bold")[Mixed] != "Total"
       $
 
       #v(1fr)
@@ -736,7 +801,7 @@
         - 2-particle resonances (bad)
 
       #v(1fr)
-      - Need a way to #text(fill: red)[*remove 3-particle*] correlations while *preserving 2-particle* correlations
+      - Need a way to #text(fill: black)[*remove 3-particle*] correlations while *preserving 2-particle* correlations
 
 
       #v(1fr)
@@ -748,7 +813,7 @@
 ]
 
 #slide[
-  == Creating a _Partially_ Mixed Event [FIXME IMAGES]
+  == Creating a _Partially_ Mixed Event
 
 
   #let box_radius = 8pt
@@ -756,7 +821,9 @@
   #grid(
     columns: (1fr, 1fr, 1fr),
     gutter: 0pt,
-    align(center)[*Real Events*], align(center)[*Selected Events*], align(center)[#only("3-")[*Mixed Events*]],
+    align(center)[*Real Events*],
+    align(center)[#only("2-")[*Selected Events*]],
+    align(center)[#only("3-")[*Partially Mixed Events*]],
   )
   #grid(
     columns: (1fr, 1fr, 1fr),
@@ -773,12 +840,12 @@
     ],
     align(center)[
       #only("2-")[
-        #box(stroke: black, radius: box_radius, image("faust_renders/real_hl_1.png", width: 80%))
+        #box(stroke: black, radius: box_radius, image("faust_renders/real_hl_1_2.png", width: 80%))
       ]
     ],
     align(center)[
       #only("3-")[
-        #box(stroke: black, radius: box_radius, image("faust_renders/mixed_1.png", width: 80%))
+        #box(stroke: black, radius: box_radius, image("faust_renders/partial_mixed_1.png", width: 80%))
       ]
     ],
 
@@ -860,34 +927,93 @@
     columns: (1fr, 2fr),
     [
       === A Case Study on $d$-$d$-$d$
-      #v(0.5cm)
+      #v(1fr)
 
       - Partial mixing (PM) provides a minor improvement over full mixing (FM).
 
-
       #v(1fr)
+
+      - PM is $~1/3$ of the way between FM and Real in the inverse CDF
+      #v(1fr)
+    ],
+    [
+      #image("figures/3d/3d_summary_3_real_mixed_partial.png", height: 85%)
+    ],
+  )
+]
+#slide[
+  == Incorporating one of the $bold(d)$--$bold(d)$ correlations
+
+  #grid(
+    ..grid_default,
+    columns: (1fr, 2fr),
+    [
+      === A Case Study on $d$-$d$-$d$
+      #v(1fr)
+
+
       *Number of $bold(d)$--$bold(d)$ correlations*
       #box(
         [
           *Real:* $binom(3, 2) = 3$
           #v(0.5cm)
-          #place(dx:0pt, dy:-31pt, line(stroke:black + 3pt, length :2.3em))
-          #text(fill:slateblue)[*Partially Mixed:*] $binom(2, 2) + binom(1, 2)= 1$
-          #place(dx:0pt, dy:-17pt, line(stroke:(paint:slateblue, thickness: 3pt, dash:"dashed"), length :7em))
+          #place(dx: 0pt, dy: -31pt, line(stroke: black + 3pt, length: 2.3em))
+          #text(fill: slateblue)[*Partially Mixed:*] $binom(2, 2) + binom(1, 2)= 1$
+          #place(dx: 0pt, dy: -17pt, line(stroke: (paint: slateblue, thickness: 3pt, dash: "dashed"), length: 7em))
           #v(0.5cm)
           #text(fill: slateblue)[*Mixed:*] 3$binom(1, 2) = 0$
-          #place(dx:0pt, dy:2pt, line(stroke:slateblue + 3pt, length :3em))
+          #place(dx: 0pt, dy: 2pt, line(stroke: slateblue + 3pt, length: 3em))
         ],
         stroke: black,
         inset: 15pt,
         radius: 5pt,
       )
       #v(1fr)
-      - PM is $~1/3$ of the way between FM and Real in the inverse CDF
-      #v(1fr)
+      - Quantile Matching: Horizontal shifts in the CDF
+        - Used a lot in climate change studies
     ],
     [
-      #image("figures/3d/3d_summary_3_real_mixed_partial.png", height: 85%)
+      #box(
+        [
+          #image("figures/3d/cdf.png", height: 85%)
+          #place(dx: 205pt, dy: -223pt)[
+            #cetz.canvas({
+              import cetz.draw: line
+
+              line(
+                (0, 0),
+                (1.3, 0),
+                mark: (end: "stealth", fill: black),
+                stroke: black + 4pt,
+              )
+            })]
+          #only("2-")[
+          #place(dx: 240pt, dy: -223pt)[
+            #cetz.canvas({
+              import cetz.draw: line
+
+              line(
+                (0, -1),
+                (1.3, -1),
+                mark: (end: "stealth", fill: black),
+                stroke: black + 4pt,
+              )
+            })]
+          #place(dx: 275pt, dy: -223pt)[
+            #cetz.canvas({
+              import cetz.draw: line
+
+              line(
+                (0, -1),
+                (1.3, -1),
+                mark: (end: "stealth", fill: black),
+                stroke: black + 4pt,
+              )
+            })]
+          ]
+        ],
+      )
+
     ],
   )
 ]
@@ -899,8 +1025,7 @@
     ..grid_default,
     columns: (1fr, 2fr),
     [
-      === A Case Study on $d$-$d$-$d$
-      #v(1cm)
+      #v(1fr)
 
       #box(
         [
@@ -913,8 +1038,6 @@
         inset: 5pt,
       )
 
-      - Quantile Matching: Horizontal shifts in the CDF
-        - Used a lot in climate change studies
 
       #v(1fr)
     ],
@@ -976,12 +1099,8 @@
       #v(1fr)
     ],
     [
-      *Does the #text(fill: red)[BG] match the Total Real?*
 
-      #v(1fr)
-      - $bold(chi^2 slash "dof" = 1.23)$  (1 is ideal)
-
-      - $bold(P = 0.0005)$ (0.5 is ideal)
+      
 
       #v(1fr)
       #box(
@@ -1058,12 +1177,12 @@
         [
           *Real:* $binom(7, 2) = 21$
           #v(0.5cm)
-          #place(dx:0pt, dy:-31pt, line(stroke:black + 3pt, length :2.3em))
-          #text(fill:slateblue)[*Partially Mixed:*] $binom(6, 2) + binom(1, 2)= 1$
-          #place(dx:0pt, dy:-17pt, line(stroke:(paint:slateblue, thickness: 3pt, dash:"dashed"), length :7em))
+          #place(dx: 0pt, dy: -31pt, line(stroke: black + 3pt, length: 2.3em))
+          #text(fill: slateblue)[*Partially Mixed:*] $binom(6, 2) + binom(1, 2)= 1$
+          #place(dx: 0pt, dy: -17pt, line(stroke: (paint: slateblue, thickness: 3pt, dash: "dashed"), length: 7em))
           #v(0.5cm)
           #text(fill: slateblue)[*Mixed:*] 7$binom(1, 2) = 0$
-          #place(dx:0pt, dy:2pt, line(stroke:slateblue + 3pt, length :3em))
+          #place(dx: 0pt, dy: 2pt, line(stroke: slateblue + 3pt, length: 3em))
         ],
         stroke: black,
         inset: 15pt,
