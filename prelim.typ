@@ -926,7 +926,6 @@
     ..grid_default,
     columns: (1fr, 2fr),
     [
-      === A Case Study on $d$-$d$-$d$
       #v(1fr)
 
       - Partial mixing (PM) provides a minor improvement over full mixing (FM).
@@ -948,10 +947,12 @@
     ..grid_default,
     columns: (1fr, 2fr),
     [
-      === A Case Study on $d$-$d$-$d$
       #v(1fr)
 
 
+      - Quantile Mapping: Horizontal shifts in the CDF
+        - Used a lot in climate change studies
+      #v(2fr)
       *Number of $bold(d)$--$bold(d)$ correlations*
       #box(
         [
@@ -969,8 +970,6 @@
         radius: 5pt,
       )
       #v(1fr)
-      - Quantile Matching: Horizontal shifts in the CDF
-        - Used a lot in climate change studies
     ],
     [
       #box(
@@ -1053,12 +1052,7 @@
     ..grid_default,
     columns: (1fr, 1fr),
     [
-      #v(1cm)
-      #image("figures/3d/3d.png", height: 85%)
-
-
-
-      #v(1fr)
+      #image("figures/3d/3d.png", height: 92%)
     ],
     [
       Does the *#text(fill: red)[Background]* match the *Total Real*?
@@ -1069,23 +1063,30 @@
       - $bold(P = 0.4998)$ (0.5 is ideal)
         - Resample the model, and assess how often a more extreme $chi^2 slash"dof"$ is observed
 
+      
+      #v(.5fr)
+      - Residuals and ratios show no systematic issues
+      #v(1fr)
       #box(
         [The background spectrum is statistically consistent with the measured spectrum.],
         stroke: black,
         radius: 5pt,
         inset: 5pt,
       )
+      #v(1fr)
 
-      *Real:* Allowed to have 3-particle correlations, but physically shouldn't
-
-      #text(fill: red)[*Background:*] Constructed in the absence of 3-particle correlations.
+    //   #only(2)[
+    //   *Real:* Allowed to have 3-particle correlations, but physically shouldn't
+    //
+    //   #text(fill: red)[*Background:*] Constructed in the absence of 3-particle correlations.
+    // ]
 
     ],
   )
 ]
 
 #slide[
-  == Another Case Study: $bold(p)$--$bold(t)$--$bold(alpha)$ (No Signal)
+  == Another Case Study: $bold(be8->p+t+alpha)$
 
   #grid(
     ..grid_default,
@@ -1101,6 +1102,8 @@
     [
 
       
+      #v(1fr)
+      - Real resonances of $be8$ are present around 23 MeV.
 
       #v(1fr)
       #box(
@@ -1111,7 +1114,7 @@
       )
 
       #v(1fr)
-      - A modified model which includes 3-particle correlations is necassary
+      - A modified model which includes 3-particle correlations is required.
       #v(1fr)
 
 
@@ -1120,7 +1123,7 @@
 ]
 
 #slide[
-  == Another Case Study: $bold(p)$--$bold(t)$--$bold(alpha)$ (Crude Double Gaussian)
+  == Another Case Study: $bold(be8->p+t+alpha)$
 
   #grid(
     ..grid_default,
@@ -1133,12 +1136,8 @@
       #v(1fr)
     ],
     [
-      Very crude (and not fully optimized) double-Gaussian model for signal
-
       #v(1fr)
-      - $bold(chi^2 slash "dof" = 1.13)$  (1 is ideal)
-
-      - $bold(P = "[TBD]")$ (0.5 is ideal)
+      - Approximate double-Gaussian model leads to reasonable total spectrum fit.
 
       #v(1fr)
       #box(
@@ -1149,9 +1148,6 @@
       )
 
       #v(1fr)
-      #text(
-        size: 12pt,
-      )[_Disclaimer: Many details were brushed under the rug here. This fit is actually rather complicated._]
 
 
     ],
@@ -1178,7 +1174,7 @@
           *Real:* $binom(7, 2) = 21$
           #v(0.5cm)
           #place(dx: 0pt, dy: -31pt, line(stroke: black + 3pt, length: 2.3em))
-          #text(fill: slateblue)[*Partially Mixed:*] $binom(6, 2) + binom(1, 2)= 1$
+          #text(fill: slateblue)[*Partially Mixed:*] $binom(6, 2) + binom(1, 2)= 15$
           #place(dx: 0pt, dy: -17pt, line(stroke: (paint: slateblue, thickness: 3pt, dash: "dashed"), length: 7em))
           #v(0.5cm)
           #text(fill: slateblue)[*Mixed:*] 7$binom(1, 2) = 0$
@@ -1230,7 +1226,7 @@
 
       #v(1fr)
       - No percievable systematic deviations
-        - *Measured $7alpha$ distribution is statistically consistent with no peaks*
+        - *Measured $bold(7alpha)$ distribution is statistically consistent with no resonances*
         - Further work needed to set upper limits of detection
       #v(1fr)
     ],
@@ -1239,28 +1235,26 @@
 
 #slide[
   // == Conclusions (so far)
+  //
 
   #grid(
     ..grid_default,
-    columns: (1fr, 1fr),
+    columns: (1fr),
     [
       == Conclusions
       #v(1fr)
-      - Toroidal nuclei are exciting nuclear structures with decades of theoretical support.
+      Toroidal nuclei are exciting nuclear structures with decades of theoretical support.
 
       #v(1fr)
-      - Experimental investigations in 2018 motivated a series higher precision measurements of $N alpha$ $E^*$ spectra, searching for toroidal isomers in $si28$, $s32$, and $ar36$.
+      Experimental investigations in 2018 motivated a series higher precision measurements of $N alpha$ $E^*$ spectra, searching for toroidal isomers in $si28$, $s32$, and $ar36$.
 
 
-      #v(1fr)
-    ],
-    [
 
       #v(1fr)
-      - Deeper investigation of the biases of mixed events led to a much more accurate description of the background.
+      Deeper investigation of the biases of mixed events led to a much more accurate description of the background.
 
       #v(1fr)
-      - No evidence for toroidal states was observed in the $7alpha$ $E^*$ distribution of $si28 + c12$ @ 35 MeV/u.
+      No evidence for toroidal states was observed in the $7alpha$ $E^*$ distribution of $si28 + c12$ @ 35 MeV/u.
         - Upper limits studies are to follow
         - The $N alpha$ systems of the $s32$ and $ar36$ data are slated to be analyzed shortly
       #v(1fr)
@@ -1268,6 +1262,9 @@
   )
 ]
 
+#slide[
+== Acklowledgments
+]
 
 
 

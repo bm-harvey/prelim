@@ -4,7 +4,7 @@
  phi         = -25.0
  roll        = 85.0
  size        = "1920x800"
- output      = "faust_renders/partial_mixed_1"
+ output      = "faust_renders/mixed_1"
  color       = false
  transparent = false
  highlight_hits = true
