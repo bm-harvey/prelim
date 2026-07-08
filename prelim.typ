@@ -1334,6 +1334,29 @@
     ],
   )
 ]
+#slide[
+  #align(center)[== Questions and Comments Welcome]
+
+#h(1fr)
+#box(stroke:black, radius :10pt, inset :5pt )[#image("figures/screenshots/Wong1978_Fig7.png", height: 40%)]
+#h(1fr)
+#box(stroke:black, radius :10pt, inset :5pt )[#image("figures/screenshots/Wong2018_Fig3.jpg", height: 40%)]
+#h(1fr)
+#box(stroke:black, radius :10pt, inset :5pt )[#image("figures/cao_2019/7alphaSpectrum.png", height: 40%)]
+#h(1fr)
+#box(stroke:black, radius :10pt, inset :5pt )[#image("figures/hannaman_2023/7alphaSpectrum.png", height: 40%)]
+#h(1fr)
+
+#h(1fr)
+#box(stroke:black, radius :10pt, inset :5pt )[#image("figures/3d/3d.png", height: 40%)]
+#h(1fr)
+#box(stroke:black, radius :10pt, inset :5pt )[#image("figures/pta/pta_figure4_signal_bands_mcmc.png", height: 40%)]
+#h(1fr)
+#box(stroke:black, radius :10pt, inset :5pt )[#image("figures/7a/7a_preserve_mix.png", height: 40%)]
+#h(1fr)
+
+
+]
 
 
 
