@@ -1,5 +1,6 @@
 #import "@preview/slydst:0.1.4": *
 #import "figures/reaction_cartoon.typ": reaction-cartoon
+#import "pir_2025/cartoons.typ": three_alpha, kin_diagram_1, kin_diagram_2
 #import "@preview/cetz:0.5.0": canvas, draw
 #import "@preview/cetz:0.5.0"
 #import "@preview/larrow:1.1.0": *
@@ -7,13 +8,15 @@
 #import "@preview/grayness:0.6.0": *
 #import "@preview/polylux:0.4.0": *
 #set page(paper: "presentation-16-9")
+// Set to true to include backup slides, false to exclude them
+#let show-backup-slides = true
+
 #let page-footer = align(center)[
   #toolbox.slide-number
 ]
 
-#set page(footer: link(<outline-slide>)[#page-footer])
+#set page(footer: if show-backup-slides { link(<outline-slide>)[#page-footer] } else { page-footer })
 
-// #let #place_ref(body) = #place(dx: 0pt, dy: 95.75%)[body]
 #let lal = arrow-label.with(dx: 0mm, dy: 0mm)
 
 #let slateblue = rgb(106, 90, 205)
@@ -89,6 +92,7 @@
 #let s32 = $isotope("S", a: 32)$
 #let ar36 = $isotope("Ar", a: 36)$
 #let ca40 = $isotope("Ca", a: 40)$
+#let cnat = $isotope("C", a:"nat")$
 
 #let today = datetime.today()
 
@@ -110,9 +114,9 @@
 
   //An overview over all the features
 
-  #text(fill: red.darken(50%))[Bryan M Harvey]
+  #text(fill: red.darken(50%))[Bryan M. Harvey]
 
-  #text(fill: red.darken(50%))[Preliminary Exam / Masters Defense]
+  #text(fill: red.darken(50%))[Preliminary Exam / Master's Defense]
 
   #today.display()
 ]
@@ -165,7 +169,7 @@
     // 2012
     align()[
       #v(0.5cm)
-      === Spherical Nucleus Binding Energy
+      === Semi-Empirical Mass Formula
       #only(1)[$
         E_B = a_V A - a_S A^(2 slash 3) - a_C (Z(Z-1))/A^(1 slash 3) - a_A (N-Z)^2/A plus.minus delta(N, Z)
       $]
@@ -176,7 +180,7 @@
 
         - $E_B$ depends on #bright([spherical]) assumptions.
         #v(1cm)
-        === What happens under deformed *Toroidal* configurations at high angular momentum?
+        === What happens under deformed *toroidal* configurations at high angular momentum?
 
         #align(center)[#image("figures/screenshots/Wong1973_Fig10.png", height: 32%)]
       ]
@@ -191,7 +195,7 @@
 ]
 
 #slide()[
-  == Boltzmann-Uehling-Uhlenbeck (BUU)  (1990s) - Dyanamic Formation
+  == Boltzmann-Uehling-Uhlenbeck (BUU)  (1990s) - Dynamic Formation
   #place(dx: 0%, dy: 95.75%)[
     #my_ref(
       journal: "Nuc. Phys. A",
@@ -260,7 +264,7 @@
       #block[
         #uncover(2)[
           #image("figures/screenshots/Wong1978_Fig7.png", width: 94%)
-          #place(dx: 79pt, dy: -93pt)[#circle(radius: 6pt, stroke: red.darken(60%) + 3pt)]
+          #place(dx: 79pt, dy: -101pt)[#circle(radius: 6pt, stroke: red.darken(60%) + 3pt)]
         ]
       ]
     ],
@@ -303,8 +307,8 @@
           #v(1fr)
           - Ichikawa's state is reproduced
           #v(1fr)
-          - Many predicitons $=>$ trends
-            - Large low density states
+          - Many predictions $=>$ trends
+            - Low-density states
             - Minor axis radius $~$ $alpha$ radius
 
           #box(
@@ -324,7 +328,7 @@
     ],
     align(center)[
       #v(.75cm)
-      A. Staszczak and C.-Y. Wong predict 18 Toroidal Isomers
+      A. Staszczak and C.-Y. Wong predict 18 toroidal isomers
       #table(
         stroke: none,
         columns: (1cm, 3cm, 3cm, 3cm, 3cm),
@@ -356,6 +360,9 @@
       #only(4)[
         #place(dx: 283pt, dy: -280pt, box(stroke: red.darken(50%) + 3pt, width: 160pt, height: 270pt, radius: 10pt))
       ]
+      #only(5)[
+        #place(dx: 36pt, dy: -280pt, box(stroke: red.darken(50%) + 3pt, width: 150pt, height: 270pt, radius: 10pt))
+      ]
       #align(center)[
         #only(2)[
           #bright([Ichikawa's $bold(#ca40)$ is reproduced])
@@ -365,6 +372,8 @@
         ]
         #only(4)[
           #bright([Low density])
+        ]
+        #only(5)[
           #bright([Several states to investigate, including $bold(si28 (E^* = 143 "MeV"))$])
         ]
       ]
@@ -380,7 +389,7 @@
   == First Experimental Evidence (2019)
   // footer
   #place(dx: 0pt, dy: 95.75%)[ #my_ref(
-    journal: "PRC",
+    journal: "Phys. Rev. C",
     volume: "99",
     id: "014606",
     year: 2019,
@@ -411,7 +420,7 @@
     ],
     align(center)[
       #uncover(2)[
-        *Neutron Ion Multidetector For Reaction Oritented Dynamics\ (NIMROD)*
+        *Neutron Ion Multidetector for Reaction Oriented Dynamics\ (NIMROD)*
         #v(1fr)
         #box(radius: 15pt, clip: true, stroke: black + 3pt, image("figures/nimrod.jpg", width: 85%))
         $si28 + c12$ @ 35 MeV/u
@@ -443,11 +452,11 @@
         - Part of 2009 experimental series
       #v(1fr)
       - Sample Size
-        - 6,467 Events w/ 7$alpha$
+        - 6,467 events w/ 7$alpha$
       #v(1fr)
       - Resolution for $E^*$ from $7alpha$
         - $~9.4$ MeV (FWHM) in ROI
-        - Position insensitive detectors
+        - Position-insensitive detectors
       #v(1fr)
     ],
     align(center)[
@@ -457,7 +466,7 @@
       #v(.5cm)
       - Nonresonant Background
         - Mixed Events
-        - #dim[Shifted AMD distribution]
+        - #dim[Shifted AMD Distribution]
       #v(1fr)
       - Extracted Peaks
         - $E^* = bold(114), bold(126), "&" bold(138)$ MeV
@@ -528,10 +537,10 @@
     align(left)[
       *Forward Array Using Silicon Technology (FAUST)*
       - 68 Si-CsI(Tl) telescopes
-        - Excellent Forward Coverage #dim[($1.7 degree$-- $~40 degree$)]
-        - Lab Energy #dim[(Thick CsI stops particles)]
-        - Isotopic Particle Identification #dim[($E$--$Delta E$ technique)]
-        - Lab Angle #dim[(Dual-Axis Duo-Lateral detectors)]
+        - Excellent forward coverage #dim[($1.7 degree$-- $~40 degree$)]
+        - Lab energy #dim[(Thick CsI stops particles)]
+        - Isotopic particle identification #dim[($E$--$Delta E$ technique)]
+        - Lab angle #dim[(Dual-Axis Duo-Lateral detectors)]
       #v(1fr)
       #only(1)[
         #align(center)[
@@ -555,14 +564,14 @@
 ]
 
 #slide[
-  == Second Experimental Result (2023)
+  == Second Experimental Result (2024)
   // footer
   #place(dx: 0pt, dy: 95.75%)[ #my_ref(
     journal: "Phys. Rev. C",
     volume: "109",
     id: "054615",
-    year: 2019,
-    url: "https://journals.aps.org/prc/abstract/10.1103/PhysRevC.99.014606",
+    year: 2024,
+    url: "https://journals.aps.org/prc/abstract/10.1103/PhysRevC.109.054615",
   )]
 
   #grid(
@@ -602,7 +611,7 @@
     align(left)[
       #v(.5cm)
       - *No obvious peaks in the raw spectrum.*
-        - Despite being more sensitve measurement
+        - Despite being more sensitive measurement
 
       #only(2)[
       #v(1fr)
@@ -622,7 +631,7 @@
 ]
 
 #focus-slide[
-       *A physically motivated, well benchmarked, and data driven background estimate is required for confident interpretation of the $bold(N alpha)$ $bold(E*)$ spectra*
+       *A physically-motivated, validated, and data-driven background estimate is required for confident interpretation of the $bold(N alpha)$ $bold(E^*)$ spectra*.
 ]
 
 #slide[
@@ -638,7 +647,7 @@
 
 
       #text(size: 12pt)[
-        High energy excitation, deexciting by unlikely channel twice
+        High-energy excitation, de-exciting by unlikely channel twice
       ]
       #text(size: 12pt, fill: luma(50%))[
         - $Q(isotope("Li", a: 6)->3d) = -25.32 "MeV"$
@@ -773,7 +782,7 @@
     #one-by-one()[
       #text(size: 20pt, weight: "bold")[$bold(dot)$]#h(.25cm) Start w/ events containing all particles][
 
-      #text(size: 20pt, weight: "bold")[$bold(dot)$]#h(.25cm) Select particles from seperate events][
+      #text(size: 20pt, weight: "bold")[$bold(dot)$]#h(.25cm) Select particles from separate events][
 
       #text(size: 20pt, weight: "bold")[$bold(dot)$]#h(.25cm) Construct new event
     ]
@@ -790,12 +799,12 @@
     [
 
       #v(1fr)
-      $
-        #text(fill: slateblue, weight:"bold")[Mixed] != "Total"
-      $
+     
+      #text(fill: slateblue, weight:"bold")[Mixed] $bold(!=)$ *Total*
+      
 
       #v(1fr)
-      - Mixed Events removes particle-particle correlations including
+      - Mixing events removes particle-particle correlations, including:
         - 3-particle resonances (good)
         - Coulomb repulsion (bad)
         - 2-particle resonances (bad)
@@ -912,7 +921,7 @@
     #one-by-one()[
       #text(size: 20pt, weight: "bold")[$bold(dot)$]#h(.25cm) Start w/ events containing all particles][
 
-      #text(size: 20pt, weight: "bold")[$bold(dot)$]#h(.25cm) Select particles from seperate events][
+      #text(size: 20pt, weight: "bold")[$bold(dot)$]#h(.25cm) Select particles from separate events][
 
       #text(size: 20pt, weight: "bold")[$bold(dot)$]#h(.25cm) Construct new event
     ]
@@ -937,22 +946,23 @@
     ],
     [
       #image("figures/3d/3d_summary_3_real_mixed_partial.png", height: 85%)
+      #only(2)[
+        #place(dx:158pt, dy:-218pt)[
+        #box(stroke:red+5pt, width:48pt, height:55pt, radius:5pt)
+      ]
+    ]
     ],
   )
 ]
 #slide[
-  == Incorporating one of the $bold(d)$--$bold(d)$ correlations
+  #only(1)[== Measure the impact of one $bold(d)$--$bold(d)$ correlation]
+  #only(2)[== Extrapolate the impact to three $bold(d)$--$bold(d)$ correlations]
 
   #grid(
     ..grid_default,
     columns: (1fr, 2fr),
     [
       #v(1fr)
-
-
-      - Quantile Mapping: Horizontal shifts in the CDF
-        - Used a lot in climate change studies
-      #v(2fr)
       *Number of $bold(d)$--$bold(d)$ correlations*
       #box(
         [
@@ -969,12 +979,31 @@
         inset: 15pt,
         radius: 5pt,
       )
+
+      #v(2fr)
+      - Quantile mapping: Horizontal shifts in the CDF
+        - Frequently used in climate change studies
       #v(1fr)
     ],
     [
       #box(
         [
-          #image("figures/3d/cdf.png", height: 85%)
+          #only(1)[#image("figures/3d/cdf_no_red_points.png", height: 85%)]
+          #only(2)[#image("figures/3d/cdf_only_red_8p0.png", height: 85%)]
+          #only(1)[
+          #place(dx: 240pt, dy: -135pt)[
+              Quantify impact of adding \
+              single $d$-$d$ correlation through\
+              inverse CDF of FM and PM
+            ]
+          ]
+          #only(2)[
+          #place(dx: 240pt, dy: -135pt)[
+              Extrapolate that effect to\ 
+              correct FM for the proper\
+              number of $d$-$d$ correlations
+            ]
+          ]
           #place(dx: 205pt, dy: -223pt)[
             #cetz.canvas({
               import cetz.draw: line
@@ -1018,23 +1047,24 @@
 ]
 
 #slide[
-  == Novel Estimation of the Nonresonant Background
+  == Derive new background through CDF
 
   #grid(
     ..grid_default,
     columns: (1fr, 2fr),
     [
       #v(1fr)
+      === Novel Estimation of the Nonresonant Background
 
       #box(
         [
-          + Measure systematic change by adding a 2-particle correlation through the change from FM to PM.
+          + Measure the systematic impact of introducing a single 2-particle correlation, via the transformation from FM to PM
 
-          + Propogate that systematic change an additional 2 times to account for all three 2-particle correlations
+          + Propagate that systematic change an additional 2 times to account for all three 2-particle correlations
         ],
         stroke: black,
-        radius: 5pt,
-        inset: 5pt,
+        radius: 10pt,
+        inset: 10pt,
       )
 
 
@@ -1061,7 +1091,7 @@
       - $bold(chi^2 slash "dof" = 0.96)$  (1 is ideal)
 
       - $bold(P = 0.4998)$ (0.5 is ideal)
-        - Resample the model, and assess how often a more extreme $chi^2 slash"dof"$ is observed
+        - Resample the model and assess how often a more extreme $chi^2 slash"dof"$ is observed
 
       
       #v(.5fr)
@@ -1103,11 +1133,14 @@
 
       
       #v(1fr)
-      - Real resonances of $be8$ are present around 23 MeV.
+      - Real resonances of $be8$ are present around $E^* = 23 "MeV"$ .
+      #v(1fr)
+      - 2-particle correlations are nonidentical
+        - More partially mixed events
 
       #v(1fr)
       #box(
-        [The data is inconsistent with a description of the data that excludes signals.],
+        [The data are visually inconsistent with a description of the data that excludes signals.],
         stroke: black,
         radius: 5pt,
         inset: 5pt,
@@ -1137,21 +1170,36 @@
     ],
     [
       #v(1fr)
-      - Approximate double-Gaussian model leads to reasonable total spectrum fit.
+      - Approximate double-Gaussian model leads to a reasonable total spectrum fit.
 
       #v(1fr)
       #box(
-        [The data is consistent with a description of the data that includes a double Gaussian signal.],
+        [The data are visually consistent with a description of the data that includes a double-Gaussian signal.],
         stroke: black,
         radius: 5pt,
         inset: 5pt,
       )
 
       #v(1fr)
+      - Real states are recovered within fitting error
+      #v(1fr)
 
 
     ],
   )
+]
+
+#slide[
+  == Quick Recap
+  #v(1fr)
+  === Mixed Events do NOT provide a reasonable description for the non-resonant background.
+  #v(1fr)
+  === For systems with 3 or more particles, [Fully] Mixed Events can be corrected through the Partially Mixed Events.
+  #v(1fr)
+  === In systems with physically no resonances, no signal needs to be added to describe the experimental data.
+  #v(1fr)
+  === In systems with resonances, peaks must be incorporated into a total spectrum fit.
+  #v(1fr)
 ]
 
 #slide[
@@ -1187,8 +1235,9 @@
 
       - Partial mixing incorporates $15 slash 21$ of the two-particle correlations
 
+      #only(2)[
       #v(1fr)
-      - Visually, very good description
+      - Visually, pretty good description
 
       // - Imperfect fit
       //   - $bold(chi^2 slash "dof" = 1.35)$  (1 is ideal)
@@ -1198,6 +1247,7 @@
       - Minor deviation at low energy
         - Detector hit pattern bias
       #v(1fr)
+    ]
     ],
   )
 ]
@@ -1225,7 +1275,7 @@
         - $bold(P = 0.52)$ (0.5 is ideal)
 
       #v(1fr)
-      - No percievable systematic deviations
+      - No perceivable systematic deviations
         - *Measured $bold(7alpha)$ distribution is statistically consistent with no resonances*
         - Further work needed to set upper limits of detection
       #v(1fr)
@@ -1234,19 +1284,16 @@
 ]
 
 #slide[
-  // == Conclusions (so far)
-  //
-
   #grid(
     ..grid_default,
     columns: (1fr),
     [
-      == Conclusions
+      == Summary
       #v(1fr)
       Toroidal nuclei are exciting nuclear structures with decades of theoretical support.
 
       #v(1fr)
-      Experimental investigations in 2018 motivated a series higher precision measurements of $N alpha$ $E^*$ spectra, searching for toroidal isomers in $si28$, $s32$, and $ar36$.
+      Experimental investigations in 2018 motivated a series of higher-precision measurements of $N alpha$ $E^*$ spectra, searching for toroidal isomers in $si28$, $s32$, and $ar36$.
 
 
 
@@ -1254,23 +1301,843 @@
       Deeper investigation of the biases of mixed events led to a much more accurate description of the background.
 
       #v(1fr)
-      No evidence for toroidal states was observed in the $7alpha$ $E^*$ distribution of $si28 + c12$ @ 35 MeV/u.
-        - Upper limits studies are to follow
-        - The $N alpha$ systems of the $s32$ and $ar36$ data are slated to be analyzed shortly
+      No statistically significant evidence for toroidal states was observed in the $7alpha$ $E^*$ distribution of $si28 + c12$ @ 35 MeV/u.
+        - Upper limits studies are to follow (Liklihood ratio + MCMC).
+        - The $N alpha$ systems of the $s32$ and $ar36$ data are slated to be analyzed shortly.
       #v(1fr)
     ],
   )
 ]
 
 #slide[
-== Acklowledgments
+  == Acknowledgments
+  #grid(
+    columns: (2fr, 1fr),
+    gutter: 10pt,
+    image(height: 90%, "pir_2025/seminar/fig/pics/group.jpg"),
+    [
+      #v(1fr)
+      - *Committee*
+        - Cody Folden
+        - Jeremy Holt
+        - Dan Melconian
+        - _Sherry Yennello_
+      - *SJY Group*
+        - Andy Hannaman
+        - Travis Hankins
+        - Alan McIntosh
+        - Kris Hagel
+      #v(1fr)
+        #box(stroke: black, clip: true, inset: (top: -100%, bottom: -100%))[#image(width: 100%, "pir_2025/seminar/fig/pics/doe.png")]
+      - Department of Energy: DE-FG02-93ER40773
+      #v(1fr)
+    ],
+  )
 ]
 
 
 
 
+#if show-backup-slides [
+#focus-slide[= Backup Slides]
 #slide[
   == Outline
   <outline-slide>
   #outline()
 ]
+
+#slide[
+  = $bold(E_(3alpha, "rel"))$ versus $bold(E_(2alpha, "rel"))$
+  #grid(
+    columns: (3fr, 3fr),
+    gutter: 8pt,
+    inset: 6pt,
+    align()[
+      #image("pir_2025/fig/3a_v_2a.png", height: 92%)
+      #v(1fr)
+    ],
+    align(center)[
+      $E_(3alpha, "rel") = 2.5 "MeV" plus.minus 80 "keV"$
+      #image("pir_2025/fig/2a_gated.png", width: 76%)
+      $E_(3alpha, "rel") = 6.5 "MeV" plus.minus 80 "keV"$
+      #image("pir_2025/fig/2a_gated_2.png", width: 76%)
+    ],
+  )
+]
+
+
+
+
+
+
+
+
+#slide[
+  = $bold(E_(3alpha, "rel"))$ versus $bold(E_(2alpha, "rel"))$ Decomposition
+  #grid(
+    columns: (1fr, 1fr, 1fr),
+    gutter: 8pt,
+    inset: 6pt,
+    align(horizon)[
+      #v(1fr)
+      #image("pir_2025/fig/tot.png", width: 100%)
+      #v(1fr)
+    ],
+    align(horizon)[
+      #v(1fr)
+      #image("pir_2025/fig/sig.png", width: 100%)
+      #v(1fr)
+    ],
+    align(horizon)[
+      #v(1fr)
+      #image("pir_2025/fig/kin.png", width: 100%)
+      #v(1fr)
+    ],
+  )
+]
+
+
+
+
+
+//
+//
+//
+//
+//
+#slide[
+  == #text(size: 12pt)[An Incomplete] Theoretical Background (Pre Cao _et al._)
+  //
+  //
+  //
+  //
+  //
+  #grid(
+    columns: (1fr, 1fr),
+    gutter: 8pt,
+    inset: 6pt,
+    stroke: black,
+    //
+    align()[
+      #grid(
+        columns: (1fr, 1.75fr),
+        gutter: 8pt,
+        inset: 2pt,
+        stroke: none,
+        image(height: 110pt, "pir_2025/seminar/fig/wong_1978_fig7.png"),
+        [
+          #my_ref(
+            journal: "Phys. Rev. C",
+            volume: "17",
+            year: "1978",
+            id: "331",
+            url: "https://journals.aps.org/prc/abstract/10.1103/PhysRevC.17.331",
+          )
+
+          - Bulk regions of $l$-$A$ space give theoretical toroidal stability
+        ],
+      )
+    ],
+
+    // 2012
+    align()[
+      #grid(
+        columns: (1.5fr, 1fr),
+        gutter: 8pt,
+        inset: 2pt,
+        stroke: none,
+        image(height: 110pt, "pir_2025/seminar/fig/ichikawa_2012_fig1.png"),
+        [
+          // T. Ichikawa
+          #my_ref(
+            journal: "Phys. Rev. Lett.",
+            volume: "109",
+            year: "2012",
+            id: "1103",
+            url: "https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.109.232503",
+          )
+
+          - HF suggests $isotope("Ca", a:40)^*$ state at $170 "MeV"$
+        ],
+      )
+    ],
+    // 2018
+    align()[
+      #grid(
+        columns: (1fr, 0.5fr),
+        gutter: 8pt,
+        inset: 2pt,
+        stroke: none,
+        image(height: 190pt, "pir_2025/seminar/fig/wong_2018_fig3.png"),
+        [
+          #my_ref(
+            journal: "Phys. Rev. C",
+            volume: "98",
+            year: "2018",
+            id: "034316",
+            url: "https://journals.aps.org/prc/abstract/10.1103/PhysRevC.98.034316",
+          )
+
+          - Single particle excitation energies explored as a function of deformation
+        ],
+      )
+    ],
+    // 2014
+    align()[
+      #box(
+        grid(
+          columns: (1fr, 1.75fr),
+          gutter: 8pt,
+          inset: 2pt,
+          stroke: none,
+          image(height: 190pt, "pir_2025/seminar/fig/wong_2014_fig3.jpg"),
+          [
+            // Cheuk-Yin Wong
+            #my_ref(
+              journal: "Phys. Lett. B",
+              volume: "738",
+              year: "2014",
+              id: "401",
+              url: "https://www.sciencedirect.com/science/article/pii/S0370269314007369?via%3Dihub",
+            )
+
+            - Cranked Skyrme-HFB
+            - *Specific $bold(E^*)$ and $bold(I)$ predictions*
+
+            - For $si28$:
+
+              #h(0.5cm) $E^* = 143.18 "MeV"$
+
+              #h(0.5cm) $I = 44 planck.reduce$
+          ],
+        ),
+      )
+
+    ],
+  )
+]
+
+//
+//
+//
+//
+//
+
+//
+//
+//
+//
+//
+
+
+//
+//
+//
+//
+//
+#slide[
+  == Experimental Background - FAUST (Hannaman _et al._)
+  //
+  //
+  //
+  //
+  //
+  #grid(
+    columns: (0.8fr, 0.8fr, 1fr),
+    gutter: 8pt,
+    inset: 6pt,
+    stroke: none,
+    align(center)[
+
+      #strong[F]orward #strong[A]rray #linebreak() #strong[U]sing #strong[S]ilicon #strong[T]echnology
+
+      #image(width: 100%, "pir_2025/seminar/fig/pics/faust.png")
+
+    ],
+    align(center)[
+      #align(center + horizon)[ #box(image(width: 100%, "pir_2025/seminar/fig/hannaman_5_8_mixed.png"))]
+
+      #my_ref(
+        journal: "Phys. Rev. C",
+        volume: "109",
+        year: "2024",
+        id: "054615",
+        url: "https://journals.aps.org/prc/abstract/10.1103/PhysRevC.109.054615",
+      )
+    ],
+    align()[
+      #v(1fr)
+      - Targetted search for high $E^*$ states in #si28
+      #v(1fr)
+      #line()
+      #v(1fr)
+
+      - \~2.5 MeV FWHM at 138 MeV ($arrow.b 3.75"x" $)
+      #v(1fr)
+      - \~186k $7alpha$ events ($arrow.t 29"x" $)
+      #v(1fr)
+      #line()
+      #v(1fr)
+      No strong narrow structure at 114, 126, or 138 MeV
+
+      #v(1fr)
+      #line()
+      #v(1fr)
+      - No accurate background estimate #linebreak()
+        #h(0.5cm) #emoji.crossmark Mixed Events#linebreak()
+        #h(0.5cm) #emoji.crossmark MD Sims
+
+      #v(1fr)
+    ],
+  )
+]
+
+//
+//
+//
+//
+//
+#slide[
+  == Polynomial Fit
+  //
+  //
+  //
+  //
+  //
+  #grid(
+    columns: (1fr, 1.3fr),
+    gutter: 10pt,
+    align(horizon)[
+      #box(image(height: 90%, "pir_2025/seminar/fig/hannaman_poly_fit.png"), stroke: none)
+    ],
+    [
+      #v(1fr)
+      - The _only_ purpose of this fit is to demonstrate the entire spectrum is consistent with some broad, 'featureless' description.
+        - 'featureless' - no prominent oscillations on scales below 10 MeV
+
+      #v(1fr)
+      - The fit is good:
+        - Residuals shown
+        - $chi_nu^2 = 1.01$
+      #v(1fr)
+      - Only claim that #quote(["no strong evidence was found for statistically significant resonant state yield in the seven $alpha$-particle channel"]).
+      #v(1fr)
+    ],
+  )
+]
+
+#slide[
+  == Common Themes when Discussing Peaks
+  //
+  //
+  //
+  //
+  //
+  #v(1cm)
+  #grid(
+    columns: (1.5fr, 1fr, 1.5fr),
+    gutter: 10pt,
+    align(horizon)[
+
+      === When is a feature consistent with another?
+      Absolute difference?
+
+      Statistical significance?
+
+      Measurement Error?
+
+      'Close to', 'reproduces', etc.
+
+      #v(1fr)
+
+      === What is the background?
+      Shape
+
+      Size
+
+      Confidence
+
+      Importance
+      #v(1cm)
+    ],
+    align(horizon + right)[],
+    align(horizon + right)[
+
+      === Use of Polynomial
+      What does the fit represent?
+
+      What conclusions can be drawn from the fit?
+      #v(1fr)
+      === Quality of Calibration
+      Accuracy
+
+      Stability
+      #v(1fr)
+      === General Statistics
+      Independence of samples
+
+      Signficance of deviations in spectra
+
+      Systematics of comparisons to experiment
+      #v(1cm)
+    ],
+  )
+]
+
+#focus-slide[= Discussion of the Polynomial Fit]
+
+
+
+
+#slide[
+  == Polynomial Roots
+
+  #grid(
+    columns: (1fr, 1fr),
+    gutter: 10pt,
+    align(horizon)[
+      #v(1fr)
+
+      #quote(["First, any peak can be fit with a non-linear polynomial, given enough terms. This in turn leads to a loss of possible real peaks in the subtraction" --- $section 2 "par" 1$])
+
+      #v(1fr)
+      - Note, any broad distribution can also be fit with a linear combination of Gaussians, given enough terms.
+      #v(1fr)
+      - We explicitly allow for the possibility of very rare and wide features hiding in the statistical noise and background uncertainty
+        - They would just need to be more prominent than the NIMROD analysis suggests
+      #v(1fr)
+    ],
+    [
+      #box(image(height: 90%, "pir_2025/seminar/fig/hannaman_poly_fit.png"), stroke: none)
+    ],
+  )
+]
+
+
+
+
+
+
+
+#slide[
+  == Polynomial Roots
+
+  #grid(
+    columns: (1fr, 1fr),
+    gutter: 10pt,
+    align(horizon)[
+      #v(1fr)
+      #quote(["Second, a polynomial function possesses several 'special' points of maxima, minima and inflections that are given by the roots of each derivative of the polynomial. Since a polynomial of order N, can in principle have at most N roots, a subtractive analysis yields additional structure that is not present in the data. In our analysis, we obtain the “special” points numerically for each dataset, by fitting a 9th order polynomial and accept the roots on each derivative if they are real and their value of the next derivative is negative (2nd Derivative Criterion)." --- $section 2 "par" 1$])
+      #v(1fr)
+
+      - There are not prominent fluctuations in the polynomial on the few MeV scale
+
+      - Checked derivatives and integral
+      - Also no structure in the std. residuals
+      #v(1fr)
+
+    ],
+    [
+      #box(image(height: 90%, "pir_2025/seminar/fig/hannaman_poly_fit.png"), stroke: none)
+    ],
+  )
+]
+
+#focus-slide[= There is not statistically significant evidence for gain drifts in the time-ordered $bold(E^*_(7alpha))$ spectrum]
+
+
+
+
+
+
+#slide[
+  == Looking for Gain Drifts
+  #grid(
+    columns: (1fr, 1fr),
+    gutter: 10pt,
+    align(horizon)[
+      #quote(["We note that the excitation energies of each partition
+        fluctuate around the full statistics value, with only variation of $approx 2.6%$. Their common tendencies might correspond to
+        minor experimental shifts, which in our method are mostly compensated by the larger fluctuation of the widths."])
+
+      #v(1fr)
+      - No matter how you partition the time-ordered data, you always end up with statistically consistent spectra
+
+      #v(1fr)
+      - Right: a \~50-50 split for example
+
+      #v(1fr)
+
+      - Disclaimer: Treating Poisson as simple $sqrt(N)$ due to timing constraints
+        - (Careful looking too hard at the high $E^*$ tail)
+      #v(1fr)
+
+    ],
+    [
+      #box(image(height: 90%, "pir_2025/seminar/fig/calib/calib_natowitz_split.png"), stroke: none)
+
+    ],
+  )
+]
+
+
+
+
+
+
+
+
+#slide[
+  == 8-fold split
+  #grid(
+    columns: (2fr, 1fr),
+    align(horizon)[
+      #box(figure(image(height: 90%, "pir_2025/seminar/fig/calib/monster_std_res.png")), stroke: none)
+    ],
+    [
+      #v(1fr)
+      - *BLACK:* Time ordered
+      - #text(stroke: none, fill: red.darken(20%), [*RED:* Time shuffled])
+      #v(1fr)
+
+      - Variances of standardized residuals range from \~0.78 - \~1.4 for both
+        - Typically between 0.85 and 1.15 for both
+
+
+      #v(1fr)
+
+    ],
+  )
+]
+
+
+
+
+
+
+
+
+#slide[
+  == $bold(3alpha)$ Spectra
+  #grid(
+    columns: (1fr, 1fr, 1fr),
+    gutter: 20pt,
+    align(center)[
+      #box(image(height: 85%, "pir_2025/seminar/fig/calib/3a_full.png"))
+    ],
+    align(center)[
+      #box(image(height: 85%, "pir_2025/seminar/fig/calib/3a_zoom.png"))
+    ],
+    align()[
+      #v(1fr)
+      - Time ordered event index versus $3alpha$-$E_"rel"$
+      #v(1fr)
+      - $c12(3^-)$ accurately reproduced
+      #v(1fr)
+      //- There is no statistically unexcpected difference between the time ordered partition
+      - #box([There is no evidence for gain drifts], stroke: black, inset: 3pt)
+      #v(1fr)
+    ],
+  )
+]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#slide[
+  == With Shuffle
+  #box(image(height: 90%, "pir_2025/seminar/fig/calib/calib_natowitz_split_with_shuffle.png"), stroke: none)
+]
+
+
+
+#slide[
+  == Comparison of Theory to Experiment w/o Experimental Response
+  #grid(
+    columns: (1fr, 1fr),
+    gutter: 10pt,
+    align(horizon)[
+
+      #box(image(width: 100%, "pir_2025/seminar/fig/theory_to_exp.png"), clip: true, inset: (top: -5%), stroke: none)
+
+    ],
+    [
+      "We observe that the new cH$alpha$C calculation results converge to the experimental data in the high $E^∗$ tail, while they are generally higher at lower $E^∗$ values. ...
+      //This is consistent with the trend of the toroid silicon calculations [21]. This implies a high degree of clusterization for the
+
+      //most energetic fragments in the experimental data.
+      #h(1cm)... On the contrary, for lower excitation energies, there are many open non-α-conjugate exit channels not available in our model." --- $section 3 "par" 7$
+
+      #v(1fr)
+
+      - Simulations of FAUST and NIMROD responses were not used for this comparison.
+      #v(1fr)
+      - The (complex) effects of efficiency and resolution make direct comparisons dubious.
+      #v(1fr)
+      //- There are also more open non-$alpha$-conjugate exit channels available at high energy
+      //- The lack of experimental data at low $E^*$ is consistent with granularity and resolution effects
+    ],
+  )
+]
+
+#slide[
+  == We Would See Prominent, Narrow Resonances
+  #box(image(height: 79%, "pir_2025/seminar/fig/sample_demo.png"), stroke: none)
+
+]
+
+
+#slide[
+  == State of the Search as of 2023
+  #box(image("pir_2025/seminar/fig/hannaman_thesis_5_9_forest.png"), height: 90%, clip: true, inset: (bottom: -27%))
+]
+
+
+//
+//
+//
+//
+//
+#slide[
+  == TAPIR
+  #grid(
+    columns: (1fr, .5fr),
+    gutter: 8pt,
+    inset: 6pt,
+    stroke: none,
+    align(center + horizon)[
+      //FAZIA
+      #v(1fr)
+      #box(
+        image(width: 90%, "aps_2026/TAPIR_listing.png"),
+        stroke: black + 3pt,
+        inset: 3pt,
+      )
+      #v(1fr)
+    ],
+    align()[
+      //FAZIA
+      #v(1fr)
+      Complete Linearization Method:
+      #v(1fr)
+      - Find curves which describe the 'flow' of data
+        - #dim[#strike([by-hand point picking])]
+        - Data Equalization
+        - Ridge Detection
+        - By-hand curve selection
+        - Curve Extrapolations
+      #v(1fr)
+      - Straighten the data based on the curves
+        - #dim[#strike([use labelled curves to guide])]
+        - Use the natural spacigng of the data
+      #v(1fr)
+    ],
+  )
+]
+
+
+
+#slide[
+  == Linearized Result
+  #grid(
+    columns: (.5fr, 1fr),
+    gutter: 8pt,
+    inset: 6pt,
+    stroke: none,
+    align()[
+      #v(2fr)
+      === TAPIR Linearization
+      - *\~ 6 minutes* per detector
+      - Very *linear* bands
+      #v(1fr)
+      #line(length: 100%)
+      #v(1fr)
+      === By-Hand Linearization
+      - Limited to *45 minutes*
+      - *Wiggly* bands
+        - Especially at low $E$
+      - Even more time would need to be invested in production
+      //#image(height: 85%, "aps_2026/fig_2_faust_det_34_full_sqrt_xcsi_ysi_h11.2_w8.4.png")
+      #v(1fr)
+    ],
+    align(center)[
+      #image(height: 92%, "aps_2026/fig_7_final_result_comp.png")
+    ],
+  )
+]
+
+#slide[
+  == Linearized Result
+  #grid(
+    columns: (.5fr, 1fr),
+    gutter: 8pt,
+    inset: 6pt,
+    stroke: none,
+    align(center)[
+      #image(height: 85%, "aps_2026/fig_2_faust_det_34_full_sqrt_xcsi_ysi_h11.2_w8.4.png")
+    ],
+    align(center)[
+      #image(height: 92%, "aps_2026/fig_6_final_result.png")
+    ],
+  )
+]
+
+#slide[
+  == Linearized Result
+  #grid(
+    columns: (.5fr, 1fr),
+    gutter: 8pt,
+    inset: 6pt,
+    stroke: none,
+    align(center)[
+      #image(height: 85%, "aps_2026/fig_2_faust_det_34_full_sqrt_xcsi_ysi_h11.2_w8.4.png")
+    ],
+    align(center)[
+      #image(height: 92%, "aps_2026/fig_6_final_result.png")
+    ],
+  )
+]
+
+#slide[
+  = FAUST Resolution / Efficiency
+  #grid(
+    columns: (3fr, 3fr),
+    gutter: 8pt,
+    inset: 6pt,
+    align()[
+      #image("misc/FaustResolution.png")
+      #v(1fr)
+    ],
+    align(left)[
+      #v(1fr)
+      - Mixed Events ran through FAUST Filter.
+      #v(1fr)
+      - Select thin gates of true energy
+      #v(1fr)
+      - Evaluate width of distribution after FAUST Filter
+      #v(1fr)
+    ],
+  )
+]
+#slide[
+  = FAUST Coverage
+  #grid(
+    columns: (3fr),
+    gutter: 8pt,
+    inset: 6pt,
+    align()[
+      #image("misc/FaustCoverage.png", height:80%)
+    ],
+  )
+  Photo Cred.: Travis Hankins
+]
+#slide[
+  = DADL
+  #grid(
+    columns: (3fr,1fr),
+    gutter: 8pt,
+    inset: 6pt,
+    align()[
+      #image("misc/DadlDiagram.png", height:80%)
+    ],
+    align()[
+      - Holes collected on Front ($p$-side)
+      - Electrons collected on Back ($n$-side)
+      - Reverse biased at \~40V
+    ],
+  )
+]
+
+#slide[
+  == $bold(7alpha)$ $bold(E^*)$ spectrum (no signal model; hit pattern corrected)
+
+  #grid(
+    ..grid_default,
+    columns: (1fr, 1fr),
+    [
+      #v(1cm)
+      #image("figures/7a/7a_preserve_mix.png", height: 85%)
+
+
+      #v(1fr)
+    ],
+    [
+
+      #v(1fr)
+      - Modify mixing procedure so FM and PM result in same per-event hit pattern as the real data
+      #v(1fr)
+
+      - New Mixing:
+        - Filter your events
+        - Create a list of particles (tagged with event index) for each detector 
+          - Hashmap from `(Z, A, Det.)->([Particle], [Ev. Idx])`
+        - Select a real event
+        - Select particles to preserve (1 for FM, $N-1$ for PM)
+        - For the rest of the particles, swap them with a particle of the same type that hit the same detector
+
+      - Preserves multidimensional hit pattern of real data.
+      #v(1fr)
+
+    ],
+  )
+]
+#focus-slide[== PTA fit]
+#slide[
+
+  #grid(
+    ..grid_default,
+    columns: (1fr, 1fr),
+    [
+      #image("figures/pta/pt_2d_before_mcmc.png", height: 85%)
+    ],
+    [
+      #image("figures/pta/pt_2d_after_mcmc.png", height: 85%)
+    ],
+  )
+]
+#slide[
+
+  #grid(
+    ..grid_default,
+    columns: (1fr, 1fr),
+    [
+      #image("figures/pta/pa_2d_before_mcmc.png", height: 85%)
+    ],
+    [
+      #image("figures/pta/pa_2d_after_mcmc.png", height: 85%)
+    ],
+  )
+]
+#slide[
+
+  #grid(
+    ..grid_default,
+    columns: (1fr, 1fr),
+    [
+      #image("figures/pta/ta_2d_before_mcmc.png", height: 85%)
+    ],
+    [
+      #image("figures/pta/ta_2d_after_mcmc.png", height: 85%)
+    ],
+  )
+]
+
+] // end show-backup-slides

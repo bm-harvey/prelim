@@ -1,0 +1,13 @@
+Name: Bryan M Harvey
+Email: bmharvey@tamu.edu
+DNP member?: Yes
+Sorting Category: U__ (I'm trying to find the exact code; I'll get back to you, but it's not one of the options)
+Year: 7
+Graduation: Dec 2026
+Traveled to > 50: 1
+Traveled to < 50: 0
+Expect to travel to: 1
+Title: The Texas Automated Particle Identification Routine (TAPIR)
+Abstract: The Texas Automated Particle Identification Routine (TAPIR) reduces the active time a human needs to spend manually working with the particle identification data, while simultaneously achieving a more accurate linearization than is practically achievable using traditional by-hand methods. In many nuclear physics experiments, the dE-E technique is employed for particle identification. Unfortunately, dE-E data is often nonlinear with several distinct gates which need to be established to identify hits as different particles; this is a historically laborious venture. One improvement to the process is to draw guidelines along the data and use those guidelines to effectively dimension-reduce the data using a technique called linearization. In complex multidetector arrays, like NIMROD and FAUST, the process of linearizing the data for all telescopes is still quite laborious and prone to human error. This talk will outline a new procedure which aims to limit the amount of human involvement required in the linearization process. In TAPIR, modern image-processing techniques are first used to automatically establish narrow groups of representative points for particle identification data. This greatly simplifies the human step of drawing gates around data. The gated representative points are processed to provide a very accurate linearization of particle identification data in much less time. 
+Contribution Level: Maximal
+Contribution: Writing – review & editing, Writing – original draft, Visualization, Methodology, Investigation, Formal analysis, Data curation, Conceptualization.

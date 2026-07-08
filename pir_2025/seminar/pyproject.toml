@@ -1,0 +1,17 @@
+[project]
+name = "ai-toroids"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "cmasher>=1.9.2",
+    "datashader>=0.18.1",
+    "matplotlib>=3.10.3",
+    "polars>=1.31.0",
+    "python-lsp-ruff>=2.2.2",
+    "python-lsp-server>=1.12.2",
+    "ruff>=0.12.2",
+    "ruff-lsp>=0.0.62",
+    "scikit-learn>=1.7.1",
+]
