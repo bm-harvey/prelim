@@ -40,6 +40,19 @@
 // #show heading.where(level: 3): set text(18pt, red.darken(50%))
 #show heading.where(level: 3): set text(18pt, black)
 #set page(margin: 0.5in)
+
+// Show logical slide numbers in the outline instead of physical page numbers
+#show outline.entry: it => context {
+  let slide-num = counter("logical-slide").at(it.element.location()).first()
+  link(
+    it.element.location(),
+    it.indented(it.prefix(), [
+      #it.body()
+      #if it.fill != none { box(width: 1fr)[#it.fill] } else { box(width: 1fr) }
+      #slide-num
+    ])
+  )
+}
 //#show
 
 
@@ -1251,6 +1264,7 @@
     ],
   )
 ]
+
 #slide[
   == $bold(7alpha)$ $bold(E^*)$ spectrum (no signal model; hit pattern corrected)
 
